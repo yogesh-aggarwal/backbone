@@ -1,9 +1,8 @@
 use std::collections::HashMap;
 
-use dns::dns_header;
-
 mod dns {
     pub mod dns_header;
+    pub mod dns_packet;
     pub mod dns_question;
     pub mod dns_record;
 
