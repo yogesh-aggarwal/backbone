@@ -6,9 +6,11 @@ mod dns {
     pub mod dns_header;
     pub mod dns_question;
     pub mod dns_record;
+    pub mod query_type;
 }
 mod utility {
     pub mod packet_buffer;
+    pub mod result;
     pub mod result_code;
 }
 
