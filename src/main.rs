@@ -7,6 +7,9 @@ mod dns {
     pub mod dns_question;
     pub mod dns_record;
 }
+mod utility {
+    pub mod packet_buffer;
+}
 
 fn main() {
     let mut header = dns_header::DNSHeader::new();
