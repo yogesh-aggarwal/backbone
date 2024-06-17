@@ -5,6 +5,7 @@ use super::{
     dns_record::DNSRecord,
 };
 
+#[derive(Clone, Debug)]
 pub struct DNSPacket {
     pub header: DNSHeader,
     pub questions: Vec<DNSQuestion>,

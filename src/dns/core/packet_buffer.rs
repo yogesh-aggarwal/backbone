@@ -1,5 +1,5 @@
 pub struct PacketBuffer {
-    data: [u8; 512],
+    pub data: [u8; 512],
 
     read_position: u16,
     write_position: u16,

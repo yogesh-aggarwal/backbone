@@ -1,6 +1,7 @@
 use super::core::{packet_buffer::PacketBuffer, query_type::QueryType};
 use crate::utility::result::Result;
 
+#[derive(Clone, Debug)]
 pub struct DNSQuestion {
     /**
      * Label sequence specifying the domain name to be resolved.
