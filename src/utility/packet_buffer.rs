@@ -157,4 +157,79 @@ impl PacketBuffer {
 
         Ok(qname)
     }
+
+    pub fn write(&mut self, byte: u8) -> Result<(), &str> {
+        /* Check for overflow */
+        if self.write_position >= 512 {
+            return Err("Packet buffer end is reached (512 bytes). No more bytes can be written.");
+        }
+
+        self.data[self.write_position as usize] = byte;
+        self.write_position += 1;
+
+        Ok(())
+    }
+
+    pub fn write_u16(&mut self, byte: u16) -> Result<(), &str> {
+        /* We don't need to check for overflow as it's already done in the `write` function */
+        if self.write((byte >> 8) as u8).is_err() {
+            return Err("Failed to write the first byte of the u16.");
+        }
+        if self.write((byte >> 0) as u8).is_err() {
+            return Err("Failed to write the second byte of the u16.");
+        }
+
+        Ok(())
+    }
+
+    pub fn write_u32(&mut self, byte: u32) -> Result<(), &str> {
+        /* We don't need to check for overflow as it's already done in the `write` function */
+        if self.write((byte >> 24) as u8).is_err() {
+            return Err("Failed to write the first byte of the u32.");
+        }
+        if self.write((byte >> 16) as u8).is_err() {
+            return Err("Failed to write the second byte of the u32.");
+        }
+        if self.write((byte >> 8) as u8).is_err() {
+            return Err("Failed to write the third byte of the u32.");
+        }
+        if self.write((byte >> 0) as u8).is_err() {
+            return Err("Failed to write the fourth byte of the u32.");
+        }
+
+        Ok(())
+    }
+
+    /**
+     * sample input: www.google.com
+     * sample output: 3www6google3com0
+     */
+    pub fn write_qname(&mut self, qname: &str) -> Result<(), &str> {
+        let tokens = qname.split(".");
+        for token in tokens {
+            let len = token.len();
+
+            /*
+             * Check for exceeding lengths in which case it will invalid to
+             * write & hence will raise error
+             */
+            if len > 63 {
+                return Err("A label in the qname is too long.");
+            }
+
+            /* Write the length of the upcoming token first */
+            if self.write(len as u8).is_err() {
+                return Err("Failed to write the length of the label.");
+            }
+
+            /* Write the token itself */
+            for char in token.as_bytes() {
+                if self.write(*char).is_err() {
+                    return Err("Failed to write the character of the label.");
+                }
+            }
+        }
+
+        Ok(())
+    }
 }
