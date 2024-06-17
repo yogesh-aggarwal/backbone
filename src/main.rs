@@ -9,6 +9,7 @@ mod dns {
 }
 mod utility {
     pub mod packet_buffer;
+    pub mod result_code;
 }
 
 fn main() {
