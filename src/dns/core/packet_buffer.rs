@@ -18,6 +18,14 @@ impl PacketBuffer {
         self.data[self.read_position as usize]
     }
 
+    pub fn step_read(&mut self, steps: u16) {
+        self.read_position += steps;
+    }
+
+    pub fn step_write(&mut self, steps: u16) {
+        self.write_position += steps;
+    }
+
     pub fn seek_read(&mut self, position: u16) -> Result<(), &str> {
         /* Check for overflow */
         if position >= 512 {
