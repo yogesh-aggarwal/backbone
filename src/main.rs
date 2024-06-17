@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::File, io::Read};
+
+use dns::{core::packet_buffer::PacketBuffer, dns_packet::DNSPacket};
+use utility::result::Result;
 
 mod dns {
     pub mod dns_header;
@@ -17,13 +20,27 @@ mod utility {
     pub mod result_code;
 }
 
-fn main() {
-    /* DNS records */
-    let mut records: HashMap<String, (u8, u8, u8, u8)> = HashMap::new();
+fn main() -> Result<()> {
+    let mut f = File::open("response.txt")?;
 
-    records.insert(String::from("google.com"), (142, 250, 67, 174));
+    let mut buffer = PacketBuffer::new();
+    f.read(&mut buffer.data)?;
 
-    let (a, b, c, d) = records.get("google.com").unwrap();
+    let packet = DNSPacket::from_buffer(&mut buffer)?;
+    println!("{:#?}", packet.header);
 
-    println!("The IP address of google.com is {}.{}.{}.{}", a, b, c, d);
+    for q in packet.questions {
+        println!("{:#?}", q);
+    }
+    for rec in packet.answers {
+        println!("{:#?}", rec);
+    }
+    for rec in packet.authorities {
+        println!("{:#?}", rec);
+    }
+    for rec in packet.additionals {
+        println!("{:#?}", rec);
+    }
+
+    Ok(())
 }
