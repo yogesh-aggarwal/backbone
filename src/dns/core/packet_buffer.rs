@@ -99,10 +99,10 @@ impl PacketBuffer {
     pub fn read_qname(&mut self) -> Result<String, &str> {
         let mut qname = String::new();
 
-        let mut msbBasedJumped = false;
         let mut jump_count = 0;
-        let mut pos = self.read_position.clone();
+        let mut msb_based_jumped = false;
 
+        let mut pos = self.read_position.clone();
         loop {
             if jump_count > 5 {
                 return Err("Too many jumps while reading qname.");
@@ -116,7 +116,7 @@ impl PacketBuffer {
             if (len & 0xC0) == 0xC0 {
                 // When a jump is performed, we only modify the shared buffer
                 // position once, and avoid making the change later on.
-                if !msbBasedJumped {
+                if !msb_based_jumped {
                     if self.seek_read(pos + 2).is_err() {
                         return Err("Failed to seek read position after reading qname.");
                     }
@@ -126,7 +126,7 @@ impl PacketBuffer {
                 let offset = (((len as u16) ^ 0xC0) << 8) | b2;
                 pos = offset as u16;
 
-                msbBasedJumped = true;
+                msb_based_jumped = true;
                 jump_count += 1;
 
                 continue;
