@@ -18,6 +18,15 @@ namespace DNS::Utility
    public:
       PacketBuffer() = default;
 
+      uint8_t
+      Get();
+
+      Result<uint8_t>
+      GetAt(uint16_t index);
+
+      Result<std::vector<uint8_t>>
+      GetRange(uint16_t start, uint16_t len);
+
       Result<uint8_t>
       ReadAsU8();
 
