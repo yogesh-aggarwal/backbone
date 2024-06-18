@@ -2,6 +2,36 @@
 
 #include <DNS/Core/Error.hpp>
 
+Result<bool>
+DNS::Utility::PacketBuffer::SeekRead(uint16_t offset)
+{
+   if (offset >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_ReadOffset = offset;
+
+   return true;
+}
+
+Result<bool>
+DNS::Utility::PacketBuffer::SeekWrite(uint16_t offset)
+{
+   if (offset >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_WriteOffset = offset;
+
+   return true;
+}
+
 uint8_t
 DNS::Utility::PacketBuffer::Get()
 {

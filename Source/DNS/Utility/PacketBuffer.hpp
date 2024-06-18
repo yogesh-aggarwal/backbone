@@ -18,6 +18,12 @@ namespace DNS::Utility
    public:
       PacketBuffer() = default;
 
+      Result<bool>
+      SeekRead(uint16_t offset);
+
+      Result<bool>
+      SeekWrite(uint16_t offset);
+
       uint8_t
       Get();
 
