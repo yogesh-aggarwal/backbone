@@ -24,6 +24,12 @@ namespace DNS::Utility
       Result<bool>
       SeekWrite(uint16_t offset);
 
+      Result<bool>
+      StepRead(uint16_t offset);
+
+      Result<bool>
+      StepWrite(uint16_t offset);
+
       uint8_t
       Get();
 

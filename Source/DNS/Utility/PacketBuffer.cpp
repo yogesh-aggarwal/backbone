@@ -32,6 +32,36 @@ DNS::Utility::PacketBuffer::SeekWrite(uint16_t offset)
    return true;
 }
 
+Result<bool>
+DNS::Utility::PacketBuffer::StepRead(uint16_t offset)
+{
+   if (m_ReadOffset + offset >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_ReadOffset += offset;
+
+   return true;
+}
+
+Result<bool>
+DNS::Utility::PacketBuffer::StepWrite(uint16_t offset)
+{
+   if (m_WriteOffset + offset >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_WriteOffset += offset;
+
+   return true;
+}
+
 uint8_t
 DNS::Utility::PacketBuffer::Get()
 {
