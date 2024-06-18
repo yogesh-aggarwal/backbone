@@ -144,3 +144,52 @@ DNS::Utility::PacketBuffer::ReadAsU32()
 
    return result;
 }
+
+Result<bool>
+DNS::Utility::PacketBuffer::WriteU8(uint8_t value)
+{
+   if (m_WriteOffset >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_Buffer[m_WriteOffset++] = value;
+
+   return true;
+}
+
+Result<bool>
+DNS::Utility::PacketBuffer::WriteU16(uint16_t value)
+{
+   if (m_WriteOffset + 2 >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_Buffer[m_WriteOffset++] = (value >> 8) & 0xFF;
+   m_Buffer[m_WriteOffset++] = (value >> 0) & 0xFF;
+
+   return true;
+}
+
+Result<bool>
+DNS::Utility::PacketBuffer::WriteU32(uint32_t value)
+{
+   if (m_WriteOffset + 4 >= 512)
+   {
+      return { false,
+               new Error({ DNS_PACKETBUFFER_OVERFLOW,
+                           "Packet buffer overflow (512)" }) };
+   }
+
+   m_Buffer[m_WriteOffset++] = (value >> 24) & 0xFF;
+   m_Buffer[m_WriteOffset++] = (value >> 16) & 0xFF;
+   m_Buffer[m_WriteOffset++] = (value >> 8) & 0xFF;
+   m_Buffer[m_WriteOffset++] = (value >> 0) & 0xFF;
+
+   return true;
+}

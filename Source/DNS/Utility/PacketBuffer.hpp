@@ -47,5 +47,14 @@ namespace DNS::Utility
 
       Result<uint32_t>
       ReadAsU32();
+
+      Result<bool>
+      WriteU8(uint8_t value);
+
+      Result<bool>
+      WriteU16(uint16_t value);
+
+      Result<bool>
+      WriteU32(uint32_t value);
    };
 }
