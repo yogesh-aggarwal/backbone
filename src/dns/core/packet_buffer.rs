@@ -1,8 +1,8 @@
 pub struct PacketBuffer {
     pub data: [u8; 512],
 
-    read_position: u16,
-    write_position: u16,
+    pub read_position: u16,
+    pub write_position: u16,
 }
 
 impl PacketBuffer {
@@ -16,6 +16,17 @@ impl PacketBuffer {
 
     pub fn get(&self) -> u8 {
         self.data[self.read_position as usize]
+    }
+
+    pub fn get_at(&self, position: u16) -> u8 {
+        self.data[position as usize]
+    }
+
+    pub fn get_range(&mut self, start: u16, len: u16) -> Result<&[u8], &str> {
+        if start + len >= 512 {
+            return Err("End of buffer".into());
+        }
+        Ok(&self.data[(start as usize)..((start + len) as usize)])
     }
 
     pub fn step_read(&mut self, steps: u16) {
