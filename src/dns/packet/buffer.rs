@@ -1,8 +1,8 @@
-use crate::buffer::{buffer::Buffer, ops_basic::BufferBasicOps, ops_uint::BufferWithUIntOps};
+use crate::buffer::{buffer::Buffer, ops_basic::BufferBasicOps, ops_uint::BufferUIntOps};
 
 pub type PacketBuffer = Buffer<512>;
 
-pub trait PacketBufferOps: BufferWithUIntOps {
+pub trait PacketBufferOps: BufferBasicOps + BufferUIntOps {
     fn read_qname(&mut self) -> Result<String, &str>;
     fn write_qname(&mut self, qname: &str) -> Result<(), &str>;
 }

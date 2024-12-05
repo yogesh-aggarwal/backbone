@@ -1,4 +1,4 @@
-use crate::buffer::ops_uint::BufferWithUIntOps;
+use crate::buffer::ops_uint::BufferUIntOps;
 use crate::utility::result::Result;
 use crate::utility::result_code::ResultCode;
 
@@ -128,7 +128,7 @@ impl PacketHeader {
         }
     }
 
-    pub fn from_buffer<T: BufferWithUIntOps>(buffer: &mut T) -> Result<PacketHeader> {
+    pub fn from_buffer<T: BufferUIntOps>(buffer: &mut T) -> Result<PacketHeader> {
         let mut result = PacketHeader::new();
 
         result.id = buffer.read_as_u16()?;
