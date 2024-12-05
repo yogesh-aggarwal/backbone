@@ -3,10 +3,6 @@
 #include <cmath>
 #include <iostream>
 #include <string>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <err.h>
 
 #include <backbone/core/helpers.hpp>
 
@@ -108,19 +104,19 @@ Error::Print(const std::string &title) const
    const int shellColumns = GetShellColumns();
 
    /* Print instructions on how to read the error trace */
-   printf("%s", std::string(shellColumns, '-').c_str());
+   PrintSeparator();
 
    char instructions[100];
    sprintf(instructions,
            "(1) = Bottom most layer   &   (%d) = Top most layer",
            static_cast<int>(m_Errors.size()));
-   PrintAtCenter(shellColumns, instructions, "|*--*[", "]*--*|");
+   PrintAtCenter(instructions, "|*--*[", "]*--*|");
 
    /* Print separator */
    printf("%s", std::string(shellColumns, '-').c_str());
 
    /* Print block's header */
-   if (title.size() > 0) { PrintAtCenter(shellColumns, title, "[", "]", false, true); }
+   if (title.size() > 0) { PrintAtCenter(title, "[", "]", false, true); }
 
    for (int i = 0; i < m_Errors.size(); i++)
    {
@@ -142,7 +138,11 @@ Error::Print(const std::string &title) const
              //  "error str"
              error.GetMessage().c_str());
    }
-   printf("\n%s\n", std::string(shellColumns, '-').c_str());
+
+   /* Print separator */
+   printf("\n");
+   PrintSeparator();
+   printf("\n");
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
@@ -151,49 +151,6 @@ void
 Error::Raise() const
 {
    throw *this;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-int
-Error::GetShellColumns() const
-{
-   struct winsize ws;
-   int            fd;
-   fd = open("/dev/tty", O_RDWR);
-   if (fd < 0 || ioctl(fd, TIOCGWINSZ, &ws) < 0) err(8, "/dev/tty");
-   const int shellColumns = ws.ws_col;
-   close(fd);
-
-   return shellColumns;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-void
-Error::PrintAtCenter(int         shellColumns,
-                     std::string message,
-                     std::string startDecorator,
-                     std::string endDecorator,
-                     bool        separatorAtStart,
-                     bool        separatorAtEnd) const
-{
-   int totalWhitespaces = shellColumns              //
-                          - startDecorator.size()   //
-                          - endDecorator.size()     //
-                          - message.size();
-   int leftWhitespaces  = totalWhitespaces / 2;
-   int rightWhitespaces = totalWhitespaces - leftWhitespaces;
-
-   if (separatorAtStart) printf("%s", std::string(shellColumns, '-').c_str());
-
-   printf("\n%s", startDecorator.c_str());
-   printf("%s", std::string(leftWhitespaces, ' ').c_str());
-   printf("%s", message.c_str());
-   printf("%s", std::string(rightWhitespaces, ' ').c_str());
-   printf("%s\n", endDecorator.c_str());
-
-   if (separatorAtEnd) printf("%s", std::string(shellColumns, '-').c_str());
 }
 
 /* ------------------------------------------------------------------------------------------------------- */

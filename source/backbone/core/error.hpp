@@ -97,16 +97,4 @@ public:
 
    void
    Raise() const;
-
-private:
-   int
-   GetShellColumns() const;
-
-   void
-   PrintAtCenter(int         shellColumns,
-                 std::string message,
-                 std::string startDecorator   = "",
-                 std::string endDecorator     = "",
-                 bool        separatorAtStart = false,
-                 bool        separatorAtEnd   = false) const;
 };
