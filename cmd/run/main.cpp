@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <backbone/lib/buffer/basic_buffer.tcc>
+#include <backbone/lib/buffer/basic.tcc>
 
 int
 main()
