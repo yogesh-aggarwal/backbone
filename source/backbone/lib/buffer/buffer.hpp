@@ -54,6 +54,9 @@ public:
 template<typename T, size_t MAX_SIZE>
 class IBuffer : public IReadableBuffer<T, MAX_SIZE>, public IWritableBuffer<T, MAX_SIZE>
 {
+public:
+   virtual size_t
+   GetCapacity() = 0;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */

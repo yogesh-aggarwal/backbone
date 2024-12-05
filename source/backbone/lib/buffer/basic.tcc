@@ -22,6 +22,12 @@ public:
       buffer.fill(m_DefaultValue);
    }
 
+   size_t
+   GetCapacity() override
+   {
+      return MAX_SIZE;
+   }
+
    T
    Get() override
    {
