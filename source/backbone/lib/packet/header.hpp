@@ -167,6 +167,9 @@ public:
 
    PacketHeader &
    operator=(PacketHeader &&other) noexcept;
+
+   void
+   Print(const std::string &name = "") const;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */

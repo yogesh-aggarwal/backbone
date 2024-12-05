@@ -1,5 +1,7 @@
 #include "header.hpp"
 
+#include <backbone/core/pch>
+
 /* ------------------------------------------------------------------------------------------------------- */
 
 PacketHeader::PacketHeader(uint16_t   id,
@@ -141,6 +143,35 @@ PacketHeader::operator=(PacketHeader &&other) noexcept
       additional_count     = other.additional_count;
    }
    return *this;
+}
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+void
+PacketHeader::Print(const std::string &name) const
+{
+   /* Print title */
+   char title[100];
+   sprintf(title, "%s Packet Header", name.c_str());
+   PrintAtCenter(title, "[", "]", true, true);
+
+   /* Print data */
+   std::cout << "ID: " << id << std::endl;
+   std::cout << "Query/Response: " << query_response << std::endl;
+   std::cout << "Operation Code: " << op_code << std::endl;
+   std::cout << "Authoritative Answer: " << authoritative_answer << std::endl;
+   std::cout << "Truncated Message: " << truncated_message << std::endl;
+   std::cout << "Recursion Desired: " << recursion_desired << std::endl;
+   std::cout << "Recursion Available: " << recursion_available << std::endl;
+   std::cout << "Reserved: " << reserved << std::endl;
+   std::cout << "Response Code: " << response_code << std::endl;
+   std::cout << "Question Count: " << question_count << std::endl;
+   std::cout << "Answer Count: " << answer_count << std::endl;
+   std::cout << "Authority Count: " << authority_count << std::endl;
+   std::cout << "Additional Count: " << additional_count << std::endl;
+
+   /* Print separator */
+   // PrintSeparator();
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
