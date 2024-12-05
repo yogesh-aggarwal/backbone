@@ -3,6 +3,10 @@
 #include <cmath>
 #include <iostream>
 #include <string>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <err.h>
 
 #include <backbone/core/helpers.hpp>
 
@@ -103,14 +107,7 @@ Error::Last() const
 void
 Error::Print(const std::string &title) const
 {
-   // struct winsize ws;
-   // int            fd;
-   // fd = open("/dev/tty", O_RDWR);
-   // if (fd < 0 || ioctl(fd, TIOCGWINSZ, &ws) < 0) err(8, "/dev/tty");
-   // const int shellColumns = ws.ws_col;
-   // close(fd);
-
-   const int shellColumns = 80;
+   const int shellColumns = GetShellColumns();
 
    /* Print instructions on how to read the error trace */
    printf("%s", std::string(shellColumns, '-').c_str());
@@ -159,6 +156,21 @@ void
 Error::Raise() const
 {
    throw *this;
+}
+
+//-----------------------------------------------------------------------------
+
+int
+Error::GetShellColumns() const
+{
+   struct winsize ws;
+   int            fd;
+   fd = open("/dev/tty", O_RDWR);
+   if (fd < 0 || ioctl(fd, TIOCGWINSZ, &ws) < 0) err(8, "/dev/tty");
+   const int shellColumns = ws.ws_col;
+   close(fd);
+
+   return shellColumns;
 }
 
 //-----------------------------------------------------------------------------

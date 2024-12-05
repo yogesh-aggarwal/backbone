@@ -11,6 +11,9 @@ enum ErrorCode
    Undefined = -1,
    Unknown   = 0x00,
 
+   /* Buffer Codes */
+   OUT_OF_BOUNDS = 0x01,
+
    /* Syscalls Error Codes */
 
    FILE_IO             = EIO,
@@ -97,6 +100,8 @@ public:
    Raise() const;
 
 private:
+   int GetShellColumns() const;
+
    void
    PrintAtCenter(int         shellColumns,
                  std::string message,
