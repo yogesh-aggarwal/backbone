@@ -10,6 +10,7 @@
 		"*.ui": "yaml",
 		"*.tcc": "cpp",
 		"*.state": "yaml",
-		"chrono": "cpp"
+		"chrono": "cpp",
+		"pch": "cpp"
 	},
 }

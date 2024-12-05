@@ -3,7 +3,7 @@
 #include <array>
 #include <stdint.h>
 
-#include <backbone/core/pch.hpp>
+#include <backbone/core/pch>
 
 namespace DNS::Utility
 {

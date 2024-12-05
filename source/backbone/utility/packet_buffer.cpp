@@ -1,15 +1,13 @@
 #include "packet_buffer.hpp"
 
-#include <backbone/core/pch.hpp>
+#include <backbone/core/pch>
 
 Result<bool>
 DNS::Utility::PacketBuffer::SeekRead(uint16_t offset)
 {
    if (offset >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_ReadOffset = offset;
@@ -22,9 +20,7 @@ DNS::Utility::PacketBuffer::SeekWrite(uint16_t offset)
 {
    if (offset >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_WriteOffset = offset;
@@ -37,9 +33,7 @@ DNS::Utility::PacketBuffer::StepRead(uint16_t offset)
 {
    if (m_ReadOffset + offset >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_ReadOffset += offset;
@@ -52,9 +46,7 @@ DNS::Utility::PacketBuffer::StepWrite(uint16_t offset)
 {
    if (m_WriteOffset + offset >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_WriteOffset += offset;
@@ -73,9 +65,7 @@ DNS::Utility::PacketBuffer::GetAt(uint16_t index)
 {
    if (index >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    return m_Buffer[index];
@@ -86,9 +76,7 @@ DNS::Utility::PacketBuffer::GetRange(uint16_t start, uint16_t len)
 {
    if (start + len >= 512)
    {
-      return { {},
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { {}, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    std::vector<uint8_t> result(len);
@@ -103,9 +91,7 @@ DNS::Utility::PacketBuffer::ReadAsU8()
 {
    if (m_ReadOffset >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    return m_Buffer[m_ReadOffset++];
@@ -150,9 +136,7 @@ DNS::Utility::PacketBuffer::WriteU8(uint8_t value)
 {
    if (m_WriteOffset >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_Buffer[m_WriteOffset++] = value;
@@ -165,9 +149,7 @@ DNS::Utility::PacketBuffer::WriteU16(uint16_t value)
 {
    if (m_WriteOffset + 2 >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_Buffer[m_WriteOffset++] = (value >> 8) & 0xFF;
@@ -181,9 +163,7 @@ DNS::Utility::PacketBuffer::WriteU32(uint32_t value)
 {
    if (m_WriteOffset + 4 >= 512)
    {
-      return { false,
-               new Error({ DNS_PACKETBUFFER_OVERFLOW,
-                           "Packet buffer overflow (512)" }) };
+      return { false, new Error({ DNS_PACKETBUFFER_OVERFLOW, "Packet buffer overflow (512)" }) };
    }
 
    m_Buffer[m_WriteOffset++] = (value >> 24) & 0xFF;
