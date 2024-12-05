@@ -42,7 +42,7 @@ fn main() -> Result<()> {
 
     println!("buffer: {:?}", buffer.read_position);
 
-    let packet = Packet::from_buffer(&mut buffer)?;
+    let _packet = Packet::from_buffer(&mut buffer).expect("Failed to read packet from buffer.");
 
     // println!("{:#?}", packet.header);
 
