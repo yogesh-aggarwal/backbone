@@ -138,6 +138,30 @@ public:
     * The number of entries in the additional section.
     */
    uint16_t additional_count;
+
+public:
+   PacketHeader(uint16_t   id,
+                bool       query_response,
+                uint8_t    op_code,
+                bool       authoritative_answer,
+                bool       truncated_message,
+                bool       recursion_desired,
+                bool       recursion_available,
+                uint8_t    reserved,
+                ResultCode response_code,
+                uint16_t   question_count,
+                uint16_t   answer_count,
+                uint16_t   authority_count,
+                uint16_t   additional_count);
+   PacketHeader(const PacketHeader &other);
+   PacketHeader(PacketHeader &&other) noexcept;
+   ~PacketHeader() = default;
+
+   PacketHeader &
+   operator=(const PacketHeader &other);
+
+   PacketHeader &
+   operator=(PacketHeader &&other) noexcept;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
