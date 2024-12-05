@@ -1,23 +1,23 @@
-use crate::utility::result::Result;
-
-use super::{
-    core::packet_buffer::PacketBuffer, dns_header::DNSHeader, dns_question::DNSQuestion,
-    dns_record::DNSRecord,
+use crate::{
+    dns::{question::question::DNSQuestion, record::record::DNSRecord},
+    utility::result::Result,
 };
 
+use super::{buffer::PacketBufferOps, header::PacketHeader};
+
 #[derive(Clone, Debug)]
-pub struct DNSPacket {
-    pub header: DNSHeader,
+pub struct Packet {
+    pub header: PacketHeader,
     pub questions: Vec<DNSQuestion>,
     pub answers: Vec<DNSRecord>,
     pub authorities: Vec<DNSRecord>,
     pub additionals: Vec<DNSRecord>,
 }
 
-impl DNSPacket {
-    pub fn new() -> DNSPacket {
-        DNSPacket {
-            header: DNSHeader::new(),
+impl Packet {
+    pub fn new() -> Packet {
+        Packet {
+            header: PacketHeader::new(),
             questions: Vec::new(),
             answers: Vec::new(),
             authorities: Vec::new(),
@@ -25,11 +25,11 @@ impl DNSPacket {
         }
     }
 
-    pub fn from_buffer(buffer: &mut PacketBuffer) -> Result<DNSPacket> {
-        let mut result = DNSPacket::new();
+    pub fn from_buffer<T: PacketBufferOps>(buffer: &mut T) -> Result<Packet> {
+        let mut result = Packet::new();
 
         /* Read header */
-        result.header = DNSHeader::from_buffer(buffer)?;
+        result.header = PacketHeader::from_buffer(buffer)?;
 
         /* Read questions */
         for _ in 0..result.header.question_count {

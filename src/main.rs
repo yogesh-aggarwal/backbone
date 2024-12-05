@@ -1,17 +1,28 @@
+use crate::buffer::ops_basic::BufferBasicOps;
+use dns::packet::{buffer::PacketBuffer, packet::Packet};
 use std::{fs::File, io::Read};
-
-use dns::{core::packet_buffer::PacketBuffer, dns_packet::DNSPacket};
 use utility::result::Result;
 
-mod dns {
-    pub mod dns_header;
-    pub mod dns_packet;
-    pub mod dns_question;
-    pub mod dns_record;
+mod buffer {
+    pub mod buffer;
+    pub mod ops_basic;
+    pub mod ops_uint;
+}
 
-    pub mod core {
-        pub mod packet_buffer;
+mod dns {
+    pub mod packet {
+        pub mod buffer;
+        pub mod header;
+        pub mod packet;
+    }
+
+    pub mod question {
         pub mod query_type;
+        pub mod question;
+    }
+
+    mod record {
+        pub mod record;
     }
 }
 
@@ -31,7 +42,8 @@ fn main() -> Result<()> {
 
     println!("buffer: {:?}", buffer.read_position);
 
-    let packet = DNSPacket::from_buffer(&mut buffer)?;
+    let packet = Packet::from_buffer(&mut buffer)?;
+
     // println!("{:#?}", packet.header);
 
     // for q in packet.questions {
