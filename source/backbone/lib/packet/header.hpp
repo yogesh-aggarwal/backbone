@@ -2,6 +2,9 @@
 
 #include <cstdint>
 
+#include <backbone/core/pch>
+#include "buffer.hpp"
+
 /* ------------------------------------------------------------------------------------------------------- */
 
 class PacketHeader
@@ -156,6 +159,8 @@ public:
    PacketHeader(const PacketHeader &other);
    PacketHeader(PacketHeader &&other) noexcept;
    ~PacketHeader() = default;
+
+   static Result<PacketHeader> from_buffer(Ref<PacketBuffer>);
 
    PacketHeader &
    operator=(const PacketHeader &other);
