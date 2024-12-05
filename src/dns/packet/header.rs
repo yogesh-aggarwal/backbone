@@ -135,14 +135,14 @@ impl PacketHeader {
 
         /*
         Use the following bit masking to extract the individual bits from the 16-bit flags field:
-        * 0b1000000000000000 = 1 bit  = 0x8000 = Query/Response
-        * 0b0111100000000000 = 4 bits = 0x7800 = Operation code
-        * 0b0000010000000000 = 1 bit  = 0x0400 = Authoritative answer
-        * 0b0000001000000000 = 1 bit  = 0x0200 = Truncated message
-        * 0b0000000100000000 = 1 bit  = 0x0100 = Recursion desired
-        * 0b0000000010000000 = 1 bit  = 0x0080 = Recursion available
-        * 0b0000000001110000 = 3 bits = 0x0078 = Reserved
-        * 0b0000000000001111 = 4 bits = 0x000F = Response code
+        * 1000000000000000 = 1 bit  = 0x8000 = Query/Response
+        * 0111100000000000 = 4 bits = 0x7800 = Operation code
+        * 0000010000000000 = 1 bit  = 0x0400 = Authoritative answer
+        * 0000001000000000 = 1 bit  = 0x0200 = Truncated message
+        * 0000000100000000 = 1 bit  = 0x0100 = Recursion desired
+        * 0000000010000000 = 1 bit  = 0x0080 = Recursion available
+        * 0000000001110000 = 3 bits = 0x0078 = Reserved
+        * 0000000000001111 = 4 bits = 0x000F = Response code
         */
         let flags = buffer.read_as_u16()?;
         /* 1st bit */
