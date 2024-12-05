@@ -38,7 +38,7 @@ add_compile_definitions(
 # ----------------------------------------------------------------------------------------------------------------------
 
 project(DNS)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_FLAGS "-pthread")
 set(NO_DEFAULT_PATH true)
 set(CMAKE_MAKE_PROGRAM "make -j 16")
