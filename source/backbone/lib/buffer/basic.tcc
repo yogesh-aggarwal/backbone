@@ -222,6 +222,26 @@ public:
       buffer[m_WriteIndex++] = value & 0xFF;
       return { true };
    }
+
+   Result<std::vector<T>>
+   Serialize() override
+   {
+      std::vector<T> data(buffer.begin(), buffer.begin() + m_WriteIndex);
+      return { data };
+   }
+
+   Result<bool>
+   Deserialize(std::vector<T> data) override
+   {
+      if (data.size() > MAX_SIZE)
+      {
+         return { false, new Error({ OUT_OF_BOUNDS, "Data size exceeds buffer capacity" }) };
+      }
+
+      std::copy(data.begin(), data.end(), buffer.begin());
+      m_WriteIndex = data.size();
+      return { true };
+   }
 };
 
 /* ------------------------------------------------------------------------------------------------------- */

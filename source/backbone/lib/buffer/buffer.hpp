@@ -76,7 +76,22 @@ public:
 /* ------------------------------------------------------------------------------------------------------- */
 
 template<typename T, size_t MAX_SIZE>
-class IBuffer : public IReadableBuffer<T, MAX_SIZE>, public IWritableBuffer<T, MAX_SIZE>
+class ISerializableBuffer
+{
+public:
+   virtual Result<std::vector<T>>
+   Serialize() = 0;
+
+   virtual Result<bool>
+   Deserialize(std::vector<T> data) = 0;
+};
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+template<typename T, size_t MAX_SIZE>
+class IBuffer : public IReadableBuffer<T, MAX_SIZE>,
+                public IWritableBuffer<T, MAX_SIZE>,
+                public ISerializableBuffer<T, MAX_SIZE>
 {
 public:
    virtual size_t
