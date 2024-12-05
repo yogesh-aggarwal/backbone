@@ -26,6 +26,9 @@ public:
    virtual Result<std::vector<T>>
    ReadRange(size_t start, size_t end) = 0;
 
+   virtual size_t
+   GetReadIndex() = 0;
+
    virtual Result<bool>
    SeekRead(size_t index) = 0;
 };
@@ -44,6 +47,9 @@ public:
 
    virtual Result<bool>
    WriteRange(size_t start, size_t end, std::vector<T> values) = 0;
+
+   virtual size_t
+   GetWriteIndex() = 0;
 
    virtual Result<bool>
    SeekWrite(size_t index) = 0;

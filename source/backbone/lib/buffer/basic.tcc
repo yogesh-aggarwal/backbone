@@ -92,6 +92,12 @@ public:
       return { range };
    }
 
+   size_t
+   GetReadIndex() override
+   {
+      return m_ReadIndex;
+   }
+
    Result<bool>
    SeekRead(size_t index) override
    {
@@ -133,6 +139,12 @@ public:
       std::copy(values.begin(), values.end(), buffer.begin() + start);
       m_WriteIndex = end + 1;
       return { true };
+   }
+
+   size_t
+   GetWriteIndex() override
+   {
+      return m_WriteIndex;
    }
 
    Result<bool>
