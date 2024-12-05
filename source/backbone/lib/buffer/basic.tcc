@@ -98,6 +98,12 @@ public:
       return m_ReadIndex;
    }
 
+   size_t
+   GetReadRemaining() override
+   {
+      return MAX_SIZE - m_ReadIndex;
+   }
+
    Result<bool>
    SeekRead(size_t index) override
    {
@@ -105,6 +111,33 @@ public:
 
       m_ReadIndex = index;
       return { true };
+   }
+
+   Result<uint16_t>
+   ReadUInt16() override
+   {
+      if (m_ReadIndex + 1 >= MAX_SIZE)
+      {
+         return { m_DefaultValue, new Error({ OUT_OF_BOUNDS, "Read index out of bounds" }) };
+      }
+
+      uint16_t value = (buffer[m_ReadIndex] << 8) | buffer[m_ReadIndex + 1];
+      m_ReadIndex += 2;
+      return { value };
+   }
+
+   Result<uint32_t>
+   ReadUInt32() override
+   {
+      if (m_ReadIndex + 3 >= MAX_SIZE)
+      {
+         return { m_DefaultValue, new Error({ OUT_OF_BOUNDS, "Read index out of bounds" }) };
+      }
+
+      uint32_t value = (buffer[m_ReadIndex] << 24) | (buffer[m_ReadIndex + 1] << 16) |
+                       (buffer[m_ReadIndex + 2] << 8) | buffer[m_ReadIndex + 3];
+      m_ReadIndex += 4;
+      return { value };
    }
 
    Result<bool>
@@ -147,12 +180,46 @@ public:
       return m_WriteIndex;
    }
 
+   size_t
+   GetWriteRemaining() override
+   {
+      return MAX_SIZE - m_WriteIndex;
+   }
+
    Result<bool>
    SeekWrite(size_t index) override
    {
       if (index >= MAX_SIZE) { return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) }; }
 
       m_WriteIndex = index;
+      return { true };
+   }
+
+   Result<bool>
+   WriteUInt16(uint16_t value) override
+   {
+      if (m_WriteIndex + 1 >= MAX_SIZE)
+      {
+         return { false, new Error({ OUT_OF_BOUNDS, "Write index out of bounds" }) };
+      }
+
+      buffer[m_WriteIndex++] = (value >> 8) & 0xFF;
+      buffer[m_WriteIndex++] = value & 0xFF;
+      return { true };
+   }
+
+   Result<bool>
+   WriteUInt32(uint32_t value) override
+   {
+      if (m_WriteIndex + 3 >= MAX_SIZE)
+      {
+         return { false, new Error({ OUT_OF_BOUNDS, "Write index out of bounds" }) };
+      }
+
+      buffer[m_WriteIndex++] = (value >> 24) & 0xFF;
+      buffer[m_WriteIndex++] = (value >> 16) & 0xFF;
+      buffer[m_WriteIndex++] = (value >> 8) & 0xFF;
+      buffer[m_WriteIndex++] = value & 0xFF;
       return { true };
    }
 };

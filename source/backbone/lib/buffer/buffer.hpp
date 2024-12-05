@@ -29,8 +29,17 @@ public:
    virtual size_t
    GetReadIndex() = 0;
 
+   virtual size_t
+   GetReadRemaining() = 0;
+
    virtual Result<bool>
    SeekRead(size_t index) = 0;
+
+   virtual Result<uint16_t>
+   ReadUInt16() = 0;
+
+   virtual Result<uint32_t>
+   ReadUInt32() = 0;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
@@ -51,8 +60,17 @@ public:
    virtual size_t
    GetWriteIndex() = 0;
 
+   virtual size_t
+   GetWriteRemaining() = 0;
+
    virtual Result<bool>
    SeekWrite(size_t index) = 0;
+
+   virtual Result<bool>
+   WriteUInt16(uint16_t value) = 0;
+
+   virtual Result<bool>
+   WriteUInt32(uint32_t value) = 0;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
