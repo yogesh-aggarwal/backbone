@@ -90,6 +90,8 @@
 		"coroutine": "cpp",
 		"stdfloat": "cpp",
 		"text_encoding": "cpp",
-		"cfenv": "cpp"
+		"cfenv": "cpp",
+		"buffer": "cpp",
+		"netfwd": "cpp"
 	}
 }
