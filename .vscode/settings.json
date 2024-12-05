@@ -3,4 +3,13 @@
 		"CMakeLists.txt": "README.md, Makefile, .gitignore, .gitmodules, .clang-format, Doxyfile",
 		"*.hpp": "$(capture).cpp, $(capture).inl, $(capture).tcc, $(capture).c"
 	},
+	"files.associations": {
+		"*.svg": "html",
+		"*.j2": "html",
+		"*.xml": "html",
+		"*.ui": "yaml",
+		"*.tcc": "cpp",
+		"*.state": "yaml",
+		"chrono": "cpp"
+	},
 }

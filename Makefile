@@ -1,2 +1,2 @@
 clean:
-	@rm -rf Build/
+	@rm -rf build/
