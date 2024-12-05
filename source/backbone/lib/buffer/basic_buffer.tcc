@@ -4,6 +4,8 @@
 
 #include <array>
 
+/* ------------------------------------------------------------------------------------------------------- */
+
 template<typename T, size_t MAX_SIZE>
 class BasicBuffer : public IBuffer<T, MAX_SIZE>
 {
@@ -15,9 +17,7 @@ private:
    size_t m_WriteIndex;
 
 public:
-   BasicBuffer(T defaultValue)
-       : m_ReadIndex(0), m_WriteIndex(0),
-         m_DefaultValue(std::move(defaultValue))
+   BasicBuffer(T defaultValue) : m_ReadIndex(0), m_WriteIndex(0), m_DefaultValue(std::move(defaultValue))
    {
       buffer.fill(m_DefaultValue);
    }
@@ -33,8 +33,7 @@ public:
    {
       if (index >= MAX_SIZE)
       {
-         return { m_DefaultValue,
-                  new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
+         return { m_DefaultValue, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
       }
 
       return { buffer[index] };
@@ -57,8 +56,7 @@ public:
    {
       if (m_ReadIndex >= MAX_SIZE)
       {
-         return { m_DefaultValue,
-                  new Error({ OUT_OF_BOUNDS, "Read index out of bounds" }) };
+         return { m_DefaultValue, new Error({ OUT_OF_BOUNDS, "Read index out of bounds" }) };
       }
 
       return { buffer[m_ReadIndex++] };
@@ -69,8 +67,7 @@ public:
    {
       if (index >= MAX_SIZE)
       {
-         return { m_DefaultValue,
-                  new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
+         return { m_DefaultValue, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
       }
 
       return { buffer[index] };
@@ -92,10 +89,7 @@ public:
    Result<bool>
    SeekRead(size_t index) override
    {
-      if (index >= MAX_SIZE)
-      {
-         return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
-      }
+      if (index >= MAX_SIZE) { return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) }; }
 
       m_ReadIndex = index;
       return { true };
@@ -106,8 +100,7 @@ public:
    {
       if (m_WriteIndex >= MAX_SIZE)
       {
-         return { false,
-                  new Error({ OUT_OF_BOUNDS, "Write index out of bounds" }) };
+         return { false, new Error({ OUT_OF_BOUNDS, "Write index out of bounds" }) };
       }
 
       buffer[m_WriteIndex++] = value;
@@ -117,10 +110,7 @@ public:
    Result<bool>
    WriteAt(size_t index, T value) override
    {
-      if (index >= MAX_SIZE)
-      {
-         return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
-      }
+      if (index >= MAX_SIZE) { return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) }; }
 
       buffer[index] = value;
       return { true };
@@ -129,12 +119,9 @@ public:
    Result<bool>
    WriteRange(size_t start, size_t end, std::vector<T> values) override
    {
-      if (start >= MAX_SIZE || end >= MAX_SIZE || start > end ||
-          values.size() != (end - start + 1))
+      if (start >= MAX_SIZE || end >= MAX_SIZE || start > end || values.size() != (end - start + 1))
       {
-         return { false,
-                  new Error({ OUT_OF_BOUNDS,
-                              "Range out of bounds or size mismatch" }) };
+         return { false, new Error({ OUT_OF_BOUNDS, "Range out of bounds or size mismatch" }) };
       }
 
       std::copy(values.begin(), values.end(), buffer.begin() + start);
@@ -145,12 +132,11 @@ public:
    Result<bool>
    SeekWrite(size_t index) override
    {
-      if (index >= MAX_SIZE)
-      {
-         return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) };
-      }
+      if (index >= MAX_SIZE) { return { false, new Error({ OUT_OF_BOUNDS, "Index out of bounds" }) }; }
 
       m_WriteIndex = index;
       return { true };
    }
 };
+
+/* ------------------------------------------------------------------------------------------------------- */

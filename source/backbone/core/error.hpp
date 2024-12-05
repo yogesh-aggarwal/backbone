@@ -51,8 +51,7 @@ private:
    std::source_location m_Location;
 
 public:
-   ErrorUnit(ErrorCode            code,
-             std::source_location location = std::source_location::current());
+   ErrorUnit(ErrorCode code, std::source_location location = std::source_location::current());
    ErrorUnit(ErrorCode            code,
              std::string          message,
              std::source_location location = std::source_location::current());
@@ -100,7 +99,8 @@ public:
    Raise() const;
 
 private:
-   int GetShellColumns() const;
+   int
+   GetShellColumns() const;
 
    void
    PrintAtCenter(int         shellColumns,

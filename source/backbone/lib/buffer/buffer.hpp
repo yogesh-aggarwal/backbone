@@ -2,6 +2,8 @@
 
 #include <backbone/core/pch.hpp>
 
+/* ------------------------------------------------------------------------------------------------------- */
+
 template<typename T, size_t MAX_SIZE>
 class IReadableBuffer
 {
@@ -28,6 +30,8 @@ public:
    SeekRead(size_t index) = 0;
 };
 
+/* ------------------------------------------------------------------------------------------------------- */
+
 template<typename T, size_t MAX_SIZE>
 class IWritableBuffer
 {
@@ -45,8 +49,11 @@ public:
    SeekWrite(size_t index) = 0;
 };
 
+/* ------------------------------------------------------------------------------------------------------- */
+
 template<typename T, size_t MAX_SIZE>
-class IBuffer : public IReadableBuffer<T, MAX_SIZE>,
-                public IWritableBuffer<T, MAX_SIZE>
+class IBuffer : public IReadableBuffer<T, MAX_SIZE>, public IWritableBuffer<T, MAX_SIZE>
 {
 };
+
+/* ------------------------------------------------------------------------------------------------------- */

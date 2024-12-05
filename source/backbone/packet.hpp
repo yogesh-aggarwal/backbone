@@ -243,27 +243,12 @@ namespace DNS
          Data data;
 
          // Constructors for each record type
-         Record(const Unknown &record) : type(Type::A)
-         {
-            new (&data.unknown) Unknown(record);
-         }
+         Record(const Unknown &record) : type(Type::A) { new (&data.unknown) Unknown(record); }
          Record(const A &record) : type(Type::A) { new (&data.a) A(record); }
-         Record(const NS &record) : type(Type::NS)
-         {
-            new (&data.ns) NS(record);
-         }
-         Record(const CNAME &record) : type(Type::CNAME)
-         {
-            new (&data.cname) CNAME(record);
-         }
-         Record(const MX &record) : type(Type::MX)
-         {
-            new (&data.mx) MX(record);
-         }
-         Record(const AAAA &record) : type(Type::AAAA)
-         {
-            new (&data.aaaa) AAAA(record);
-         }
+         Record(const NS &record) : type(Type::NS) { new (&data.ns) NS(record); }
+         Record(const CNAME &record) : type(Type::CNAME) { new (&data.cname) CNAME(record); }
+         Record(const MX &record) : type(Type::MX) { new (&data.mx) MX(record); }
+         Record(const AAAA &record) : type(Type::AAAA) { new (&data.aaaa) AAAA(record); }
 
          // Destructor to manually call the destructor of the active member
          ~Record()
