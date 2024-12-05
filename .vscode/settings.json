@@ -86,6 +86,10 @@
 		"expected": "cpp",
 		"format": "cpp",
 		"span": "cpp",
-		"regex": "cpp"
+		"regex": "cpp",
+		"coroutine": "cpp",
+		"stdfloat": "cpp",
+		"text_encoding": "cpp",
+		"cfenv": "cpp"
 	}
 }

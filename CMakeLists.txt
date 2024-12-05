@@ -19,25 +19,25 @@ endfunction()
 # ---- Compile-Time Defines --------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-set(DNS_DEBUG_AS_APPLICATION ON)
-# set(DNS_DEBUG_AS_APPLICATION OFF)
+set(BACKBONE_DEBUG_AS_APPLICATION ON)
+# set(BACKBONE_DEBUG_AS_APPLICATION OFF)
 
-if(DNS_DEBUG_AS_APPLICATION)
-   add_compile_definitions(DNS_DEBUG_AS_APPLICATION)
+if(BACKBONE_DEBUG_AS_APPLICATION)
+   add_compile_definitions(BACKBONE_DEBUG_AS_APPLICATION)
 endif()
 
 add_compile_definitions(
    DEBUG
 
-   # DNS_DISABLE_LOGGING
-   # DNS_DISABLE_LOGGING_OUTPUT_TO_FILE
+   # BACKBONE_DISABLE_LOGGING
+   # BACKBONE_DISABLE_LOGGING_OUTPUT_TO_FILE
 )
 
 # ----------------------------------------------------------------------------------------------------------------------
 # ---- Project Setup ---------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-project(DNS)
+project(backbone)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_FLAGS "-pthread")
 set(NO_DEFAULT_PATH true)
@@ -47,22 +47,22 @@ set(CMAKE_MAKE_PROGRAM "make -j 16")
 # ---- Files -----------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-FILE(GLOB_RECURSE DNS_HEADER_FILES Source/*.hpp)
-FILE(GLOB_RECURSE DNS_SOURCE_FILES Source/*.cpp)
-FILE(GLOB_RECURSE DNS_TEMPLATE_FILES Source/*.tcc)
+FILE(GLOB_RECURSE BACKBONE_HEADER_FILES source/*.hpp)
+FILE(GLOB_RECURSE BACKBONE_SOURCE_FILES source/*.cpp)
+FILE(GLOB_RECURSE BACKBONE_TEMPLATE_FILES source/*.tcc)
 
-set(DNS_ALL_FILES ${DNS_HEADER_FILES} ${DNS_SOURCE_FILES} ${DNS_TEMPLATE_FILES})
+set(BACKBONE_ALL_FILES ${BACKBONE_HEADER_FILES} ${BACKBONE_SOURCE_FILES} ${BACKBONE_TEMPLATE_FILES})
 
 # ----------------------------------------------------------------------------------------------------------------------
 # ---- Product ---------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-include_directories(Source)
+include_directories(source)
 
-if(DNS_DEBUG_AS_APPLICATION)
-   add_executable(${PROJECT_NAME} ${DNS_ALL_FILES})
+if(BACKBONE_DEBUG_AS_APPLICATION)
+   add_executable(${PROJECT_NAME} ${BACKBONE_ALL_FILES})
 else()
-   add_library(${PROJECT_NAME} ${DNS_ALL_FILES})
+   add_library(${PROJECT_NAME} ${BACKBONE_ALL_FILES})
 endif()
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -82,14 +82,14 @@ message("[(---- Done Linking Libraries ----)]\n")
 # ---- PCHs ------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-# FILE(GLOB_RECURSE DNS_PCH_FILES Source/DNS/Core/*.hpp)
-# target_precompile_headers(${PROJECT_NAME} PUBLIC ${DNS_PCH_FILES})
+# FILE(GLOB_RECURSE BACKBONE_PCH_FILES source/backbone/Core/*.hpp)
+# target_precompile_headers(${PROJECT_NAME} PUBLIC ${BACKBONE_PCH_FILES})
 
 # ----------------------------------------------------------------------------------------------------------------------
 # ---- Installation ----------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 set(CMAKE_INSTALL_PREFIX "/usr")
-install(DIRECTORY Source/DNS
+install(DIRECTORY source/backbone
    DESTINATION include
    FILES_MATCHING
    PATTERN "*.hpp"
