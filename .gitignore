@@ -3,5 +3,7 @@ Build/
 Temp/
 cmake-build-debug/
 
+dev/
+
 /**/Scratch/*
 output/
