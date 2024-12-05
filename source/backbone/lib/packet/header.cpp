@@ -1,7 +1,5 @@
 #include "header.hpp"
 
-#include <backbone/core/pch>
-
 /* ------------------------------------------------------------------------------------------------------- */
 
 PacketHeader::PacketHeader(uint16_t   id,
@@ -156,19 +154,19 @@ PacketHeader::Print(const std::string &name) const
    PrintAtCenter(title, "[", "]", true, true);
 
    /* Print data */
-   std::cout << "ID: " << id << std::endl;
-   std::cout << "Query/Response: " << query_response << std::endl;
-   std::cout << "Operation Code: " << op_code << std::endl;
-   std::cout << "Authoritative Answer: " << authoritative_answer << std::endl;
-   std::cout << "Truncated Message: " << truncated_message << std::endl;
-   std::cout << "Recursion Desired: " << recursion_desired << std::endl;
-   std::cout << "Recursion Available: " << recursion_available << std::endl;
-   std::cout << "Reserved: " << reserved << std::endl;
-   std::cout << "Response Code: " << response_code << std::endl;
-   std::cout << "Question Count: " << question_count << std::endl;
-   std::cout << "Answer Count: " << answer_count << std::endl;
-   std::cout << "Authority Count: " << authority_count << std::endl;
-   std::cout << "Additional Count: " << additional_count << std::endl;
+   printf("ID: %d\n", id);
+   printf("Query/Response: %d\n", query_response);
+   printf("Operation Code: %d\n", op_code);
+   printf("Authoritative Answer: %d\n", authoritative_answer);
+   printf("Truncated Message: %d\n", truncated_message);
+   printf("Recursion Desired: %d\n", recursion_desired);
+   printf("Recursion Available: %d\n", recursion_available);
+   printf("Reserved: %d\n", reserved);
+   printf("Response Code: %d\n", response_code);
+   printf("Question Count: %d\n", question_count);
+   printf("Answer Count: %d\n", answer_count);
+   printf("Authority Count: %d\n", authority_count);
+   printf("Additional Count: %d\n", additional_count);
 
    /* Print separator */
    // PrintSeparator();
