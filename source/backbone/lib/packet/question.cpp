@@ -32,7 +32,7 @@ PacketQuestion::from_buffer(Ref<PacketBuffer> buf) {
 
 Result<std::string>
 PacketQuestion::read_domain_name(Ref<PacketBuffer> buffer) {
-   return std::string();
+   return buffer->read_qname();
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
