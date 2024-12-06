@@ -8,42 +8,16 @@ enum ErrorCode {
    /* Generic Error Codes */
 
    UNDEFINED = -1,
-   Unknown   = 0x00,
+   Unknown   = 0x0,
 
    /* Buffer Codes */
-   OUT_OF_BOUNDS = 0x01,
+   OUT_OF_BOUNDS = 0x1,
+   FAILED_TO_READ_QNAME,
+   FAILED_TO_READ_LABEL,
 
    /* Packet Error Codes */
    FAILED_TO_PARSE_HEADER = 0x2,
    FAILED_TO_PARSE_QUESTION,
-
-   /* Syscalls Error Codes */
-
-   FILE_IO             = EIO,
-   FILE_NOT_FOUND      = ENOENT,
-   FILE_ALREADY_EXISTS = EEXIST,
-
-   OPERATION_NOT_PERMITTED = EPERM,
-
-   MKDIR_FAILED  = EACCES,
-   MKDIR_EXISTED = EEXIST,
-
-   MOUNT_FAILED      = EACCES,
-   MOUNT_BIND_FAILED = EACCES,
-
-   RMDIR_FAILED = EACCES,
-
-   /* Reset the enum counter */
-
-   STEVE_ERROR = 1 << 24,
-
-   /* Utility Error Codes */
-
-   DNS_CRITICAL_ERROR,
-
-   /* Packet buffer */
-
-   DNS_PACKETBUFFER_OVERFLOW,
 };
 
 class ErrorUnit {
