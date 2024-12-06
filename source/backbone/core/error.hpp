@@ -80,22 +80,22 @@ public:
    explicit Error(const std::vector<ErrorUnit> &errors);
 
    void
-   Push(const ErrorUnit &unit);
+   push(const ErrorUnit &unit);
 
    void
-   Clear();
+   clear();
 
    operator bool() const;
 
    const ErrorUnit &
-   First() const;
+   first() const;
 
    const ErrorUnit &
-   Last() const;
+   last() const;
 
    void
-   Print(const std::string &title = "") const;
+   print(const std::string &title = "") const;
 
    void
-   Raise() const;
+   raise() const;
 };

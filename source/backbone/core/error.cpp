@@ -61,14 +61,14 @@ Error::Error(const std::vector<ErrorUnit> &errors) : m_Errors(errors) {}
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Push(const ErrorUnit &unit) {
+Error::push(const ErrorUnit &unit) {
    m_Errors.push_back(unit);
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Clear() {
+Error::clear() {
    m_Errors.clear();
 }
 
@@ -79,24 +79,24 @@ Error::operator bool() const { return m_Errors.size() > 0; }
 /* ------------------------------------------------------------------------------------------------------- */
 
 const ErrorUnit &
-Error::First() const {
+Error::first() const {
    return m_Errors[0];
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 const ErrorUnit &
-Error::Last() const {
+Error::last() const {
    return m_Errors[m_Errors.size() - 1];
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Print(const std::string &title) const {
+Error::print(const std::string &title) const {
    const int shellColumns = GetShellColumns();
 
-   /* Print instructions on how to read the error trace */
+   /* print instructions on how to read the error trace */
    PrintSeparator();
 
    char instructions[100];
@@ -105,10 +105,10 @@ Error::Print(const std::string &title) const {
            static_cast<int>(m_Errors.size()));
    PrintAtCenter(instructions, "|*--*[", "]*--*|");
 
-   /* Print separator */
+   /* print separator */
    printf("%s", std::string(shellColumns, '-').c_str());
 
-   /* Print block's header */
+   /* print block's header */
    if (title.size() > 0) {
       PrintAtCenter(title, "[", "]", false, true);
    }
@@ -133,7 +133,7 @@ Error::Print(const std::string &title) const {
              error.GetMessage().c_str());
    }
 
-   /* Print separator */
+   /* print separator */
    printf("\n");
    PrintSeparator();
    printf("\n");
@@ -142,7 +142,7 @@ Error::Print(const std::string &title) const {
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Raise() const {
+Error::raise() const {
    throw *this;
 }
 
