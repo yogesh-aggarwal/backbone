@@ -12,14 +12,13 @@
 template<typename T>
 class [[nodiscard]] Result {
 private:
-   std::optional<T> value;
-   Ref<Error>       error;
+   std::optional<T>     value;
+   std::optional<Error> error;
 
 public:
-   Result(T value) : value(std::move(value)), error(nullptr) {}
-   Result(const Error &error) : value(std::nullopt), error(std::make_shared<Error>(error)) {}
-   Result(Ref<Error> error) : value(std::nullopt), error(std::move(error)) {}
-   Result(T value, Ref<Error> error) : value(std::move(value)), error(std::move(error)) {}
+   Result(T value) : value(std::move(value)), error(std::nullopt) {}
+   Result(const Error &error) : value(std::nullopt), error(std::move(error)) {}
+   Result(T value, const Error &error) : value(std::move(value)), error(std::move(error)) {}
 
    Result(const Result<T> &other)     = default;
    Result(Result<T> &&other) noexcept = default;
@@ -32,7 +31,7 @@ public:
 
    explicit
    operator bool() const {
-      return !error || !*error;
+      return !error.has_value();
    }
 
    const T &
@@ -43,27 +42,30 @@ public:
       return *value;
    }
 
-   const Ref<Error> &
+   const Error &
    get_error() const {
-      return error;
+      if (!error.has_value()) {
+         throw std::runtime_error("Attempted to access error from a value Result");
+      }
+      return error.value();
    }
 
    bool
    is_error() const {
-      return !*this;
+      return error.has_value();
    }
 
    const Result<T> &
-   with_catch_fn(const std::function<void(Ref<Error>)> &handler) const {
-      if (error) {
-         handler(error);
+   with_catch_fn(const std::function<void(Error)> &handler) const {
+      if (is_error()) {
+         handler(error.value());
       }
       return *this;
    }
 
    Result<T> &
    with_catch(const ErrorUnit &eu) {
-      if (error) {
+      if (is_error()) {
          error->push(eu);
       }
       return *this;
@@ -92,12 +94,11 @@ public:
 template<>
 class [[nodiscard]] Result<void> {
 public:
-   Ref<Error> error;
+   std::optional<Error> error;
 
 public:
-   Result() : error(nullptr) {}
-   Result(const Error &error) : error(std::make_shared<Error>(error)) {}
-   Result(Ref<Error> error) : error(std::move(error)) {}
+   Result() : error(std::nullopt) {}
+   Result(const Error &error) : error(std::move(error)) {}
 
    Result(const Result<void> &other)     = default;
    Result(Result<void> &&other) noexcept = default;
@@ -110,33 +111,36 @@ public:
 
    explicit
    operator bool() const {
-      return !error || !*error;
+      return !error.has_value();
    }
 
-   const Ref<Error> &
+   const Error &
    get_error() const {
-      return error;
+      if (!error) {
+         throw std::runtime_error("Attempted to access error from a value Result");
+      }
+      return error.value();
    }
 
    bool
    is_error() const {
-      return !*this;
+      return error.has_value();
    }
 
    const Result<void> &
-   with_catch_fn(const std::function<void(Ref<Error>)> &handler) const {
-      if (error) {
-         handler(error);
+   with_catch_fn(const std::function<void(Error)> &handler) const {
+      if (is_error()) {
+         handler(error.value());
       }
       return *this;
    }
 
    Result<void> &
    with_catch(const ErrorUnit &eu) {
-      if (error) {
+      if (is_error()) {
          error->push(eu);
       } else {
-         error = std::make_shared<Error>(eu);
+         error = Error(eu);
       }
       return *this;
    }
