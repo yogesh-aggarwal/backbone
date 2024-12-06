@@ -77,3 +77,55 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
+
+Result<void>
+Packet::write_to_buffer(Ref<PacketBuffer> buffer) const {
+   auto res = Ok();
+
+   /* Write header */
+   res = this->header
+             .write_to_buffer(buffer)
+             //
+             .with_catch({ FAILED_TO_WRITE_HEADER, "Failed to write packet header" });
+   RETURN_IF_ERROR(res);
+
+   /* Write questions */
+   for (const auto &question : questions) {
+      res = question
+                .write_to_buffer(buffer)
+                //
+                .with_catch({ FAILED_TO_WRITE_QUESTION, "Failed to write packet question" });
+      RETURN_IF_ERROR(res);
+   }
+
+   /* Write answers */
+   for (const auto &answer : answers) {
+      res = answer
+                .write_to_buffer(buffer)
+                //
+                .with_catch({ FAILED_TO_WRITE_RECORD, "Failed to write packet answer" });
+      RETURN_IF_ERROR(res);
+   }
+
+   /* Write authorities */
+   for (const auto &authority : authorities) {
+      res = authority
+                .write_to_buffer(buffer)
+                //
+                .with_catch({ FAILED_TO_WRITE_RECORD, "Failed to write packet authority" });
+      RETURN_IF_ERROR(res);
+   }
+
+   /* Write additionals */
+   for (const auto &additional : additionals) {
+      res = additional
+                .write_to_buffer(buffer)
+                //
+                .with_catch({ FAILED_TO_WRITE_RECORD, "Failed to write packet additional" });
+      RETURN_IF_ERROR(res);
+   }
+
+   return Ok();
+}
+
+/* ------------------------------------------------------------------------------------------------------- */

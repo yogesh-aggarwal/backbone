@@ -27,6 +27,9 @@ public:
 public:
    static Result<Packet>
    from_buffer(Ref<PacketBuffer> buffer);
+
+   Result<void>
+   write_to_buffer(Ref<PacketBuffer> buffer) const;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
