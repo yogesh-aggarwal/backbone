@@ -34,7 +34,7 @@ public:
       return !error.has_value();
    }
 
-   const T &
+   inline const T &
    get_value() const {
       if (!value.has_value()) {
          throw std::runtime_error("Attempted to access value from an error Result");
@@ -42,7 +42,7 @@ public:
       return *value;
    }
 
-   const Error &
+   inline const Error &
    get_error() const {
       if (!error.has_value()) {
          throw std::runtime_error("Attempted to access error from a value Result");
@@ -50,12 +50,12 @@ public:
       return error.value();
    }
 
-   bool
+   inline bool
    is_error() const {
       return error.has_value();
    }
 
-   const Result<T> &
+   inline const Result<T> &
    with_catch_fn(const std::function<void(Error)> &handler) const {
       if (is_error()) {
          handler(error.value());
@@ -63,7 +63,7 @@ public:
       return *this;
    }
 
-   Result<T> &
+   inline Result<T> &
    with_catch(const ErrorUnit &eu) {
       if (is_error()) {
          error->push(eu);
@@ -71,7 +71,7 @@ public:
       return *this;
    }
 
-   Result<T> &
+   inline Result<T> &
    with_fallback(const T &fallback) {
       if (!value) {
          value = fallback;
@@ -79,12 +79,12 @@ public:
       return *this;
    }
 
-   std::tuple<std::optional<T>, Ref<Error>>
+   inline std::tuple<std::optional<T>, Ref<Error>>
    as_tuple() const {
       return { value, error };
    }
 
-   static Result<T>
+   inline static Result<T>
    ok(T value) {
       return Result<T>(std::move(value));
    }
@@ -114,7 +114,7 @@ public:
       return !error.has_value();
    }
 
-   const Error &
+   inline const Error &
    get_error() const {
       if (!error) {
          throw std::runtime_error("Attempted to access error from a value Result");
@@ -122,12 +122,12 @@ public:
       return error.value();
    }
 
-   bool
+   inline bool
    is_error() const {
       return error.has_value();
    }
 
-   const Result<void> &
+   inline const Result<void> &
    with_catch_fn(const std::function<void(Error)> &handler) const {
       if (is_error()) {
          handler(error.value());
@@ -135,7 +135,7 @@ public:
       return *this;
    }
 
-   Result<void> &
+   inline Result<void> &
    with_catch(const ErrorUnit &eu) {
       if (is_error()) {
          error->push(eu);
@@ -152,7 +152,6 @@ public:
 };
 
 // Helper function to return Ok() for Result<void>
-
 inline Result<void>
 Ok() {
    return Result<void>::ok();
