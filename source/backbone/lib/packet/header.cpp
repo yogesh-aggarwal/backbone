@@ -153,7 +153,7 @@ PacketHeader::write_to_buffer(Ref<PacketBuffer> buf) const {
              .with_catch({ OUT_OF_BOUNDS, "Failed to write the additional count" });
    RETURN_IF_ERROR(res)
 
-   Ok();
+   return Ok();
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
