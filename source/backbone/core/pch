@@ -6,6 +6,6 @@
 #include "defines.hpp"
 #include "error.hpp"
 #include "helpers.hpp"
-#include "result.tcc"
+#include "result.tpp"
 
 #include <backbone/utility/log.hpp>

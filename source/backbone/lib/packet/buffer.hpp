@@ -1,6 +1,6 @@
 #pragma once
 
-#include <backbone/lib/buffer/basic.tcc>
+#include <backbone/lib/buffer/basic.tpp>
 
 /* ------------------------------------------------------------------------------------------------------- */
 
