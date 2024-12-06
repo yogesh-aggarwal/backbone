@@ -159,6 +159,9 @@ public:
 
    static Result<PacketHeader> from_buffer(Ref<PacketBuffer>);
 
+   Result<void>
+   write_to_buffer(Ref<PacketBuffer> buf) const;
+
    void
    print(const std::string &name = "") const;
 };
