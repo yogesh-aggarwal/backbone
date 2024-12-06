@@ -79,14 +79,14 @@ PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
    RETURN_IF_ERROR(_flags);
    int flags = _flags.get_value();
 
-   header.query_response       = (flags & 0b1000000000000000);   // 1 bit
-   header.op_code              = (flags & 0b0111100000000000);   // 4 bits
-   header.authoritative_answer = (flags & 0b0000010000000000);   // 1 bit
-   header.truncated_message    = (flags & 0b0000001000000000);   // 1 bit
-   header.recursion_desired    = (flags & 0b0000000100000000);   // 1 bit
-   header.recursion_available  = (flags & 0b0000000010000000);   // 1 bit
-   header.reserved             = (flags & 0b0000000001110000);   // 3 bits
-   header.response_code        = static_cast<ResultCode>((flags & 0b0000000000001111));
+   header.query_response       = (flags & 0b1000000000000000);                            // 1 bit
+   header.op_code              = (flags & 0b0111100000000000);                            // 4 bits
+   header.authoritative_answer = (flags & 0b0000010000000000);                            // 1 bit
+   header.truncated_message    = (flags & 0b0000001000000000);                            // 1 bit
+   header.recursion_desired    = (flags & 0b0000000100000000);                            // 1 bit
+   header.recursion_available  = (flags & 0b0000000010000000);                            // 1 bit
+   header.reserved             = (flags & 0b0000000001110000);                            // 3 bits
+   header.response_code        = static_cast<ResultCode>((flags & 0b0000000000001111));   // 4 bits
 
    // 16 bits
    auto _question_count =
