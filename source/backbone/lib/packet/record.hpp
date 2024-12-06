@@ -5,7 +5,8 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 class PacketRecord {
-   static PacketRecord
+public:
+   static Result<PacketRecord>
    from_buffer(Ref<PacketBuffer> buffer);
 };
 
