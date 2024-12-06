@@ -18,11 +18,20 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
    auto header = PacketHeader::from_buffer(buffer)
                      //
                      .with_catch({ FAILED_TO_PARSE_HEADER, "Failed to parse packet header" });
-   if (header.is_error()) {
-      return header.get_error();
-   }
+   RETURN_IF_ERROR(header);
 
    /* Parse questions */
+   std::vector<PacketQuestion> questions;
+   for (size_t i = 0; i < header.get_value().question_count; i++) {
+      // Parse question
+      auto question = PacketQuestion::from_buffer(buffer)
+                          //
+                          .with_catch({ FAILED_TO_PARSE_QUESTION, "Failed to parse packet question" });
+      RETURN_IF_ERROR(question);
+
+      // Add question to the list
+      questions.push_back(question.get_value());
+   }
 
    /* Parse answers */
 
