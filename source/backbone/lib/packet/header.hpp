@@ -7,11 +7,9 @@
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-class PacketHeader
-{
+class PacketHeader {
 public:
-   enum ResultCode
-   {
+   enum ResultCode {
       NO_ERROR        = 0,
       FORMAT_ERROR    = 1,
       SERVER_FAILURE  = 2,
@@ -169,7 +167,7 @@ public:
    operator=(PacketHeader &&other) noexcept;
 
    void
-   Print(const std::string &name = "") const;
+   print(const std::string &name = "") const;
 };
 
 /* ------------------------------------------------------------------------------------------------------- */

@@ -70,7 +70,7 @@ PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
 
    // 16 bits
    auto _id = buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the ID field from buffer" });
-   RETURN_IF_ERROR(_id);
+   RETURN_IF_ERROR(_id)
    header.id = _id.get_value();
 
    // 16 bits
@@ -161,7 +161,7 @@ PacketHeader::operator=(PacketHeader &&other) noexcept {
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-PacketHeader::Print(const std::string &name) const {
+PacketHeader::print(const std::string &name) const {
    /* Print title */
    char title[100];
    sprintf(title, "%s Packet Header", name.c_str());
