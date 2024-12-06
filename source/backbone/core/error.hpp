@@ -97,5 +97,5 @@ public:
    print(const std::string &title = "") const;
 
    void
-   raise() const;
+   panic() const;
 };
