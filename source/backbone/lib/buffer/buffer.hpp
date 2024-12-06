@@ -32,7 +32,7 @@ public:
    virtual size_t
    GetReadRemaining() = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    SeekRead(size_t index) = 0;
 
    virtual Result<uint16_t>
@@ -48,13 +48,13 @@ template<typename T, size_t MAX_SIZE>
 class IWritableBuffer
 {
 public:
-   virtual Result<bool>
+   virtual Result<void>
    Write(T value) = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    WriteAt(size_t index, T value) = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    WriteRange(size_t start, size_t end, std::vector<T> values) = 0;
 
    virtual size_t
@@ -63,13 +63,13 @@ public:
    virtual size_t
    GetWriteRemaining() = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    SeekWrite(size_t index) = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    WriteUInt16(uint16_t value) = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    WriteUInt32(uint32_t value) = 0;
 };
 
@@ -82,7 +82,7 @@ public:
    virtual Result<std::vector<T>>
    Serialize() = 0;
 
-   virtual Result<bool>
+   virtual Result<void>
    Deserialize(std::vector<T> data) = 0;
 };
 
