@@ -4,8 +4,7 @@
 #include <vector>
 #include <source_location>
 
-enum ErrorCode
-{
+enum ErrorCode {
    /* Generic Error Codes */
 
    Undefined = -1,
@@ -13,6 +12,9 @@ enum ErrorCode
 
    /* Buffer Codes */
    OUT_OF_BOUNDS = 0x01,
+
+   /* Packet Error Codes */
+   FAILED_TO_PARSE_HEADER = 0x2,
 
    /* Syscalls Error Codes */
 
@@ -43,8 +45,7 @@ enum ErrorCode
    DNS_PACKETBUFFER_OVERFLOW,
 };
 
-class ErrorUnit
-{
+class ErrorUnit {
 private:
    ErrorCode            m_Code;
    std::string          m_Message;
@@ -52,6 +53,7 @@ private:
 
 public:
    ErrorUnit(ErrorCode code, std::source_location location = std::source_location::current());
+   ErrorUnit(std::string message, std::source_location location = std::source_location::current());
    ErrorUnit(ErrorCode            code,
              std::string          message,
              std::source_location location = std::source_location::current());
@@ -68,15 +70,14 @@ public:
    operator std::string() const;
 };
 
-class Error
-{
+class Error {
 private:
    std::vector<ErrorUnit> m_Errors;
 
 public:
    Error();
    Error(const ErrorUnit &unit);
-   Error(const std::vector<ErrorUnit> &errors);
+   explicit Error(const std::vector<ErrorUnit> &errors);
 
    void
    Push(const ErrorUnit &unit);

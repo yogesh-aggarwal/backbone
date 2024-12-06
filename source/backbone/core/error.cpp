@@ -9,38 +9,36 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 ErrorUnit::ErrorUnit(ErrorCode code, std::source_location location)
-    : m_Code(code), m_Message(""), m_Location(location)
-{
-}
+    : m_Code(code), m_Message(""), m_Location(location) {}
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+ErrorUnit::ErrorUnit(std::string message, std::source_location location)
+    : m_Code(Undefined), m_Message(std::move(message)), m_Location(location) {}
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 ErrorUnit::ErrorUnit(ErrorCode code, std::string message, std::source_location location)
-    : m_Code(code), m_Message(std::move(message)), m_Location(location)
-{
-}
+    : m_Code(code), m_Message(std::move(message)), m_Location(location) {}
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 ErrorCode
-ErrorUnit::GetCode() const
-{
+ErrorUnit::GetCode() const {
    return m_Code;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 std::string
-ErrorUnit::GetMessage() const
-{
+ErrorUnit::GetMessage() const {
    return m_Message;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 const std::source_location &
-ErrorUnit::GetLocation() const
-{
+ErrorUnit::GetLocation() const {
    return m_Location;
 }
 
@@ -63,16 +61,14 @@ Error::Error(const std::vector<ErrorUnit> &errors) : m_Errors(errors) {}
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Push(const ErrorUnit &unit)
-{
+Error::Push(const ErrorUnit &unit) {
    m_Errors.push_back(unit);
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Clear()
-{
+Error::Clear() {
    m_Errors.clear();
 }
 
@@ -83,24 +79,21 @@ Error::operator bool() const { return m_Errors.size() > 0; }
 /* ------------------------------------------------------------------------------------------------------- */
 
 const ErrorUnit &
-Error::First() const
-{
+Error::First() const {
    return m_Errors[0];
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 const ErrorUnit &
-Error::Last() const
-{
+Error::Last() const {
    return m_Errors[m_Errors.size() - 1];
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Print(const std::string &title) const
-{
+Error::Print(const std::string &title) const {
    const int shellColumns = GetShellColumns();
 
    /* Print instructions on how to read the error trace */
@@ -116,10 +109,11 @@ Error::Print(const std::string &title) const
    printf("%s", std::string(shellColumns, '-').c_str());
 
    /* Print block's header */
-   if (title.size() > 0) { PrintAtCenter(title, "[", "]", false, true); }
+   if (title.size() > 0) {
+      PrintAtCenter(title, "[", "]", false, true);
+   }
 
-   for (int i = 0; i < m_Errors.size(); i++)
-   {
+   for (int i = 0; i < m_Errors.size(); i++) {
       const auto &error = m_Errors[i];
 
       int indent = 1                    // (
@@ -148,8 +142,7 @@ Error::Print(const std::string &title) const
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::Raise() const
-{
+Error::Raise() const {
    throw *this;
 }
 
