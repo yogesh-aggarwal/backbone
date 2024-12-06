@@ -16,7 +16,11 @@ public:
    std::vector<PacketRecord>   authorities;
    std::vector<PacketRecord>   additionals;   // or resources
 
-   Packet();
+   Packet(PacketHeader                header,
+          std::vector<PacketQuestion> questions,
+          std::vector<PacketRecord>   answers,
+          std::vector<PacketRecord>   authorities,
+          std::vector<PacketRecord>   additionals);
    Packet(const Packet &other);
    Packet(Packet &&other);
    ~Packet() = default;
@@ -28,8 +32,8 @@ public:
    operator=(Packet &&other);
 
 public:
-   static Packet
-   from_buffer(PacketBuffer &buffer);
+   static Result<Packet>
+   from_buffer(Ref<PacketBuffer> buffer);
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
