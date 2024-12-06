@@ -98,7 +98,7 @@ public:
 
       m_ReadIndex = index;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    Result<uint16_t>
@@ -134,7 +134,7 @@ public:
 
       buffer[m_WriteIndex++] = value;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    Result<void>
@@ -145,7 +145,7 @@ public:
 
       buffer[index] = value;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    Result<void>
@@ -157,7 +157,7 @@ public:
       std::copy(values.begin(), values.end(), buffer.begin() + start);
       m_WriteIndex = end + 1;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    size_t
@@ -178,7 +178,7 @@ public:
 
       m_WriteIndex = index;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    Result<void>
@@ -190,7 +190,7 @@ public:
       buffer[m_WriteIndex++] = (value >> 8) & 0xFF;
       buffer[m_WriteIndex++] = value & 0xFF;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    Result<void>
@@ -204,7 +204,7 @@ public:
       buffer[m_WriteIndex++] = (value >> 8) & 0xFF;
       buffer[m_WriteIndex++] = value & 0xFF;
 
-      return Result<void>::ok();
+      Ok();
    }
 
    Result<std::vector<T>>
@@ -223,7 +223,7 @@ public:
       std::copy(data.begin(), data.end(), buffer.begin());
       m_WriteIndex = data.size();
 
-      return Result<void>::ok();
+      Ok();
    }
 };
 
