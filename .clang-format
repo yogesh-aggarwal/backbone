@@ -13,7 +13,7 @@ AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: Empty
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: All
@@ -24,15 +24,15 @@ BinPackArguments: false
 BinPackParameters: false
 BreakBeforeBinaryOperators: None
 BraceWrapping:
-  AfterEnum: true
-  AfterUnion: true
-  AfterClass: true
-  BeforeElse: true
-  AfterStruct: true
-  BeforeCatch: true
-  AfterFunction: true
-  AfterNamespace: true
-  AfterControlStatement: true
+  AfterEnum: false
+  AfterUnion: false
+  AfterClass: false
+  BeforeElse: false
+  AfterStruct: false
+  BeforeCatch: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterControlStatement: false
 BreakBeforeBraces: Custom
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeColon
