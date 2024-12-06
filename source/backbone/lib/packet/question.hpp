@@ -33,6 +33,9 @@ public:
    static Result<PacketQuestion>
    from_buffer(Ref<PacketBuffer> buf);
 
+   Result<void>
+   write_to_buffer(Ref<PacketBuffer> buf) const;
+
 private:
    static Result<std::string>
    read_domain_name(Ref<PacketBuffer> buf);
