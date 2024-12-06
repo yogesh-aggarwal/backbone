@@ -4,7 +4,7 @@
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-class PacketBuffer : public BasicBuffer<uint8_t, 512>
+class PacketBuffer : public BasicBuffer<Byte, 512>
 {
 public:
    PacketBuffer();
