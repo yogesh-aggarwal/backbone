@@ -30,8 +30,12 @@ public:
    PacketQuestion(const std::string &name, QueryType type, uint16_t class_);
    ~PacketQuestion() = default;
 
-   static PacketQuestion
-   from_buffer(Ref<PacketBuffer> buffer);
+   static Result<PacketQuestion>
+   from_buffer(Ref<PacketBuffer> buf);
+
+private:
+   static Result<std::string>
+   read_domain_name(Ref<PacketBuffer> buf);
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
