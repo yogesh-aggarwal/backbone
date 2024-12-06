@@ -7,7 +7,7 @@
 class PacketQuestion
 {
    static PacketQuestion
-   from_buffer(PacketBuffer &buffer);
+   from_buffer(Ref<PacketBuffer> buffer);
 };
 
 /* ------------------------------------------------------------------------------------------------------- */

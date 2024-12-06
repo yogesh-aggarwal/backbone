@@ -7,7 +7,7 @@
 class PacketRecord
 {
    static PacketRecord
-   from_buffer(PacketBuffer &buffer);
+   from_buffer(Ref<PacketBuffer> buffer);
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
