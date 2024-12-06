@@ -23,26 +23,6 @@ PacketHeader::PacketHeader(uint16_t   id,
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-PacketHeader::PacketHeader(const PacketHeader &other)
-    : id(other.id), query_response(other.query_response), op_code(other.op_code),
-      authoritative_answer(other.authoritative_answer), truncated_message(other.truncated_message),
-      recursion_desired(other.recursion_desired), recursion_available(other.recursion_available),
-      reserved(other.reserved), response_code(other.response_code), question_count(other.question_count),
-      answer_count(other.answer_count), authority_count(other.authority_count),
-      additional_count(other.additional_count) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-PacketHeader::PacketHeader(PacketHeader &&other) noexcept
-    : id(other.id), query_response(other.query_response), op_code(other.op_code),
-      authoritative_answer(other.authoritative_answer), truncated_message(other.truncated_message),
-      recursion_desired(other.recursion_desired), recursion_available(other.recursion_available),
-      reserved(other.reserved), response_code(other.response_code), question_count(other.question_count),
-      answer_count(other.answer_count), authority_count(other.authority_count),
-      additional_count(other.additional_count) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
 /**
  * @brief
  * Parse a packet header from a buffer. The buffer must be at least 12 bytes long.
@@ -60,8 +40,8 @@ PacketHeader::PacketHeader(PacketHeader &&other) noexcept
  */
 Result<PacketHeader>
 PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
-   auto _ = buf->SeekRead(0);
-   if (buf->GetReadRemaining() < 12) {
+   auto _ = buf->seek_read(0);
+   if (buf->get_read_remaining() < 12) {
       return Error({ OUT_OF_BOUNDS, "Buffer overflowed while reading the header" });
    }
 
@@ -69,13 +49,13 @@ PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
        PacketHeader(0, false, 0, false, false, false, false, 0, ResultCode::NO_ERROR, 0, 0, 0, 0);
 
    // 16 bits
-   auto _id = buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the ID field from buffer" });
+   auto _id = buf->read_uint16().with_catch({ OUT_OF_BOUNDS, "Failed to read the ID field from buffer" });
    RETURN_IF_ERROR(_id)
    header.id = _id.get_value();
 
    // 16 bits
    auto _flags =
-       buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the _flags field from buffer" });
+       buf->read_uint16().with_catch({ OUT_OF_BOUNDS, "Failed to read the _flags field from buffer" });
    RETURN_IF_ERROR(_flags);
    int flags = _flags.get_value();
 
@@ -90,72 +70,28 @@ PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
 
    // 16 bits
    auto _question_count =
-       buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the question count" });
+       buf->read_uint16().with_catch({ OUT_OF_BOUNDS, "Failed to read the question count" });
    RETURN_IF_ERROR(_question_count);
    header.question_count = _question_count.get_value();
 
    // 16 bits
-   auto _answer_count = buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the answer count" });
+   auto _answer_count = buf->read_uint16().with_catch({ OUT_OF_BOUNDS, "Failed to read the answer count" });
    RETURN_IF_ERROR(_answer_count);
    header.answer_count = _answer_count.get_value();
 
    // 16 bits
    auto _authority_count =
-       buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the authority count" });
+       buf->read_uint16().with_catch({ OUT_OF_BOUNDS, "Failed to read the authority count" });
    RETURN_IF_ERROR(_authority_count);
    header.authority_count = _authority_count.get_value();
 
    // 16 bits
    auto _additional_count =
-       buf->ReadUInt16().with_catch({ OUT_OF_BOUNDS, "Failed to read the additional count" });
+       buf->read_uint16().with_catch({ OUT_OF_BOUNDS, "Failed to read the additional count" });
    RETURN_IF_ERROR(_additional_count);
    header.additional_count = _additional_count.get_value();
 
    return header;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-PacketHeader &
-PacketHeader::operator=(const PacketHeader &other) {
-   if (this != &other) {
-      id                   = other.id;
-      query_response       = other.query_response;
-      op_code              = other.op_code;
-      authoritative_answer = other.authoritative_answer;
-      truncated_message    = other.truncated_message;
-      recursion_desired    = other.recursion_desired;
-      recursion_available  = other.recursion_available;
-      reserved             = other.reserved;
-      response_code        = other.response_code;
-      question_count       = other.question_count;
-      answer_count         = other.answer_count;
-      authority_count      = other.authority_count;
-      additional_count     = other.additional_count;
-   }
-   return *this;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-PacketHeader &
-PacketHeader::operator=(PacketHeader &&other) noexcept {
-   if (this != &other) {
-      id                   = other.id;
-      query_response       = other.query_response;
-      op_code              = other.op_code;
-      authoritative_answer = other.authoritative_answer;
-      truncated_message    = other.truncated_message;
-      recursion_desired    = other.recursion_desired;
-      recursion_available  = other.recursion_available;
-      reserved             = other.reserved;
-      response_code        = other.response_code;
-      question_count       = other.question_count;
-      answer_count         = other.answer_count;
-      authority_count      = other.authority_count;
-      additional_count     = other.additional_count;
-   }
-   return *this;
 }
 
 /* ------------------------------------------------------------------------------------------------------- */

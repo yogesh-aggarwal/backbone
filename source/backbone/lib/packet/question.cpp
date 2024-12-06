@@ -7,16 +7,6 @@ PacketQuestion::PacketQuestion(const std::string &name, QueryType type, uint16_t
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-PacketQuestion::PacketQuestion(const PacketQuestion &other)
-    : m_Name(other.m_Name), m_Type(other.m_Type), m_Class(other.m_Class) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-PacketQuestion::PacketQuestion(PacketQuestion &&other)
-    : m_Name(std::move(other.m_Name)), m_Type(other.m_Type), m_Class(other.m_Class) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
 PacketQuestion
 PacketQuestion::from_buffer(Ref<PacketBuffer> buffer) {
    // // Assuming PacketBuffer has methods to read data

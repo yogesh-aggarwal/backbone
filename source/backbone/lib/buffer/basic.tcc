@@ -21,17 +21,17 @@ public:
    }
 
    size_t
-   GetCapacity() override {
+   get_capacity() override {
       return MAX_SIZE;
    }
 
    T
-   Get() override {
+   get() override {
       return buffer[m_ReadIndex];
    }
 
    Result<T>
-   GetAt(size_t index) override {
+   get_at(size_t index) override {
       if (index >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Index out of bounds" });
       }
@@ -40,7 +40,7 @@ public:
    }
 
    Result<std::vector<T>>
-   GetRange(size_t start, size_t end) override {
+   get_range(size_t start, size_t end) override {
       if (start >= MAX_SIZE || end >= MAX_SIZE || start > end) {
          return Error({ OUT_OF_BOUNDS, "Range out of bounds" });
       }
@@ -51,7 +51,7 @@ public:
    }
 
    Result<T>
-   Read() override {
+   read() override {
       if (m_ReadIndex >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Read index out of bounds" });
       }
@@ -60,7 +60,7 @@ public:
    }
 
    Result<T>
-   ReadAt(size_t index) override {
+   read_at(size_t index) override {
       if (index >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Index out of bounds" });
       }
@@ -69,7 +69,7 @@ public:
    }
 
    Result<std::vector<T>>
-   ReadRange(size_t start, size_t end) override {
+   read_range(size_t start, size_t end) override {
       if (start >= MAX_SIZE || end >= MAX_SIZE || start > end) {
          return Error({ OUT_OF_BOUNDS, "Range out of bounds" });
       }
@@ -81,17 +81,17 @@ public:
    }
 
    size_t
-   GetReadIndex() override {
+   get_read_index() override {
       return m_ReadIndex;
    }
 
    size_t
-   GetReadRemaining() override {
+   get_read_remaining() override {
       return MAX_SIZE - m_ReadIndex;
    }
 
    Result<void>
-   SeekRead(size_t index) override {
+   seek_read(size_t index) override {
       if (index >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Index out of bounds" });
       }
@@ -102,7 +102,7 @@ public:
    }
 
    Result<uint16_t>
-   ReadUInt16() override {
+   read_uint16() override {
       if (m_ReadIndex + 1 >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Read index out of bounds" });
       }
@@ -114,7 +114,7 @@ public:
    }
 
    Result<uint32_t>
-   ReadUInt32() override {
+   read_uint32() override {
       if (m_ReadIndex + 3 >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Read index out of bounds" });
       }
@@ -127,7 +127,7 @@ public:
    }
 
    Result<void>
-   Write(T value) override {
+   write(T value) override {
       if (m_WriteIndex >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Write index out of bounds" });
       }
@@ -138,7 +138,7 @@ public:
    }
 
    Result<void>
-   WriteAt(size_t index, T value) override {
+   write_at(size_t index, T value) override {
       if (index > MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Index out of bounds" });
       }
@@ -149,7 +149,7 @@ public:
    }
 
    Result<void>
-   WriteRange(size_t start, size_t end, std::vector<T> values) override {
+   write_range(size_t start, size_t end, std::vector<T> values) override {
       if (start >= MAX_SIZE || end >= MAX_SIZE || start > end || values.size() != (end - start + 1)) {
          return Error({ OUT_OF_BOUNDS, "Range out of bounds or size mismatch" });
       }
@@ -161,17 +161,17 @@ public:
    }
 
    size_t
-   GetWriteIndex() override {
+   get_write_index() override {
       return m_WriteIndex;
    }
 
    size_t
-   GetWriteRemaining() override {
+   get_write_remaining() override {
       return MAX_SIZE - m_WriteIndex;
    }
 
    Result<void>
-   SeekWrite(size_t index) override {
+   seek_write(size_t index) override {
       if (index >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Index out of bounds" });
       }
@@ -182,7 +182,7 @@ public:
    }
 
    Result<void>
-   WriteUInt16(uint16_t value) override {
+   write_uint16(uint16_t value) override {
       if (m_WriteIndex + 1 >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Write index out of bounds" });
       }
@@ -194,7 +194,7 @@ public:
    }
 
    Result<void>
-   WriteUInt32(uint32_t value) override {
+   write_uint32(uint32_t value) override {
       if (m_WriteIndex + 3 >= MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Write index out of bounds" });
       }
@@ -208,14 +208,14 @@ public:
    }
 
    Result<std::vector<T>>
-   Serialize() override {
+   serialize() override {
       std::vector<T> data(buffer.begin(), buffer.begin() + m_WriteIndex);
 
       return data;
    }
 
    Result<void>
-   Deserialize(std::vector<T> data) override {
+   deserialize(std::vector<T> data) override {
       if (data.size() > MAX_SIZE) {
          return Error({ OUT_OF_BOUNDS, "Data size exceeds buffer capacity" });
       }

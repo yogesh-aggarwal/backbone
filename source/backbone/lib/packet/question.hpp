@@ -28,9 +28,6 @@ private:
 public:
    PacketQuestion() = delete;
    PacketQuestion(const std::string &name, QueryType type, uint16_t class_);
-   PacketQuestion(const PacketQuestion &other);
-   PacketQuestion(PacketQuestion &&other);
-
    ~PacketQuestion() = default;
 
    static PacketQuestion

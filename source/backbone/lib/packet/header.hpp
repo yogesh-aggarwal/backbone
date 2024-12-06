@@ -141,6 +141,7 @@ public:
    uint16_t additional_count;
 
 public:
+   PacketHeader() = delete;
    PacketHeader(uint16_t   id,
                 bool       query_response,
                 uint8_t    op_code,
@@ -154,17 +155,9 @@ public:
                 uint16_t   answer_count,
                 uint16_t   authority_count,
                 uint16_t   additional_count);
-   PacketHeader(const PacketHeader &other);
-   PacketHeader(PacketHeader &&other) noexcept;
    ~PacketHeader() = default;
 
    static Result<PacketHeader> from_buffer(Ref<PacketBuffer>);
-
-   PacketHeader &
-   operator=(const PacketHeader &other);
-
-   PacketHeader &
-   operator=(PacketHeader &&other) noexcept;
 
    void
    print(const std::string &name = "") const;
