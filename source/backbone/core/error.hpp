@@ -17,8 +17,11 @@ enum ErrorCode {
 
    /* Packet Error Codes */
    FAILED_TO_PARSE_HEADER = 0x2,
+   FAILED_TO_WRITE_HEADER,
    FAILED_TO_PARSE_QUESTION,
+   FAILED_TO_WRITE_QUESTION,
    FAILED_TO_PARSE_RECORD,
+   FAILED_TO_WRITE_RECORD,
 };
 
 class ErrorUnit {

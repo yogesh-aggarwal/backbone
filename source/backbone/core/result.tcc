@@ -150,3 +150,10 @@ public:
       return Result<void>();
    }
 };
+
+// Helper function to return Ok() for Result<void>
+
+inline Result<void>
+Ok() {
+   return Result<void>::ok();
+}
