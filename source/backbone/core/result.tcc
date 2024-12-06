@@ -37,7 +37,7 @@ public:
 
    const T &
    get_value() const {
-      if (!value) {
+      if (!value.has_value()) {
          throw std::runtime_error("Attempted to access value from an error Result");
       }
       return *value;
@@ -64,9 +64,9 @@ public:
    Result<T> &
    with_catch(const ErrorUnit &eu) {
       if (error) {
-         error->Push(eu);
+         error->push(eu);
       } else {
-         error = std::make_shared<Error>(eu);
+         error = CreateRef<Error>(eu);
       }
       return *this;
    }
@@ -136,7 +136,7 @@ public:
    Result<void> &
    with_catch(const ErrorUnit &eu) {
       if (error) {
-         error->Push(eu);
+         error->push(eu);
       } else {
          error = std::make_shared<Error>(eu);
       }
