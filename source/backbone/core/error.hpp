@@ -8,7 +8,7 @@ enum ErrorCode {
    /* Generic Error Codes */
 
    UNDEFINED = -1,
-   Unknown   = 0x0,
+   UNKNOWN   = 0x0,
 
    /* Buffer Codes */
    OUT_OF_BOUNDS = 0x1,
