@@ -65,8 +65,6 @@ public:
    with_catch(const ErrorUnit &eu) {
       if (error) {
          error->push(eu);
-      } else {
-         error = CreateRef<Error>(eu);
       }
       return *this;
    }
