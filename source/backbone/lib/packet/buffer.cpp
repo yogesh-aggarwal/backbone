@@ -15,8 +15,7 @@ PacketBuffer::PacketBuffer(PacketBuffer &&other) : BasicBuffer<uint8_t, 512>(std
 /* ------------------------------------------------------------------------------------------------------- */
 
 PacketBuffer &
-PacketBuffer::operator=(const PacketBuffer &other)
-{
+PacketBuffer::operator=(const PacketBuffer &other) {
    BasicBuffer<uint8_t, 512>::operator=(other);
    return *this;
 }
@@ -24,8 +23,7 @@ PacketBuffer::operator=(const PacketBuffer &other)
 /* ------------------------------------------------------------------------------------------------------- */
 
 PacketBuffer &
-PacketBuffer::operator=(PacketBuffer &&other)
-{
+PacketBuffer::operator=(PacketBuffer &&other) {
    BasicBuffer<uint8_t, 512>::operator=(std::move(other));
    return *this;
 }

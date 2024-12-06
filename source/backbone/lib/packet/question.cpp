@@ -3,8 +3,7 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 PacketQuestion
-PacketQuestion::from_buffer(Ref<PacketBuffer> buffer)
-{
+PacketQuestion::from_buffer(Ref<PacketBuffer> buffer) {
    return PacketQuestion();
 }
 

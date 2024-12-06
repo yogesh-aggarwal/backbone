@@ -4,8 +4,7 @@
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-class PacketBuffer : public BasicBuffer<Byte, 512>
-{
+class PacketBuffer : public BasicBuffer<Byte, 512> {
 public:
    PacketBuffer();
    PacketBuffer(const PacketBuffer &other);

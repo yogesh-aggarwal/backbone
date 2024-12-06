@@ -4,8 +4,7 @@
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-class PacketQuestion
-{
+class PacketQuestion {
    static PacketQuestion
    from_buffer(Ref<PacketBuffer> buffer);
 };

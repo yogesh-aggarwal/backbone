@@ -7,8 +7,7 @@
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-class Packet
-{
+class Packet {
 public:
    PacketHeader                header;
    std::vector<PacketQuestion> questions;

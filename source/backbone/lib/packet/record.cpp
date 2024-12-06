@@ -3,8 +3,7 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 PacketRecord
-PacketRecord::from_buffer(Ref<PacketBuffer> buffer)
-{
+PacketRecord::from_buffer(Ref<PacketBuffer> buffer) {
    return PacketRecord();
 }
 

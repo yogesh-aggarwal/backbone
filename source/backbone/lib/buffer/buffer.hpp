@@ -5,8 +5,7 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 template<typename T, size_t MAX_SIZE>
-class IReadableBuffer
-{
+class IReadableBuffer {
 public:
    virtual T
    Get() = 0;
@@ -45,8 +44,7 @@ public:
 /* ------------------------------------------------------------------------------------------------------- */
 
 template<typename T, size_t MAX_SIZE>
-class IWritableBuffer
-{
+class IWritableBuffer {
 public:
    virtual Result<void>
    Write(T value) = 0;
@@ -76,8 +74,7 @@ public:
 /* ------------------------------------------------------------------------------------------------------- */
 
 template<typename T, size_t MAX_SIZE>
-class ISerializableBuffer
-{
+class ISerializableBuffer {
 public:
    virtual Result<std::vector<T>>
    Serialize() = 0;
@@ -91,8 +88,7 @@ public:
 template<typename T, size_t MAX_SIZE>
 class IBuffer : public IReadableBuffer<T, MAX_SIZE>,
                 public IWritableBuffer<T, MAX_SIZE>,
-                public ISerializableBuffer<T, MAX_SIZE>
-{
+                public ISerializableBuffer<T, MAX_SIZE> {
 public:
    virtual size_t
    GetCapacity() = 0;

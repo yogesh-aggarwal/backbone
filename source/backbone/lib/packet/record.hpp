@@ -4,8 +4,7 @@
 
 /* ------------------------------------------------------------------------------------------------------- */
 
-class PacketRecord
-{
+class PacketRecord {
    static PacketRecord
    from_buffer(Ref<PacketBuffer> buffer);
 };

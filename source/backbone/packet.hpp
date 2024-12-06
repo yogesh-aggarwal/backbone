@@ -10,13 +10,10 @@
 #   include <netinet/in.h>
 #endif
 
-namespace DNS
-{
-   class Packet
-   {
+namespace DNS {
+   class Packet {
    public:
-      class Header
-      {
+      class Header {
       private:
          /**
           * 16-bits
@@ -130,8 +127,7 @@ namespace DNS
          ~Header() = default;
       };
 
-      class Question
-      {
+      class Question {
       private:
          /**
           * Label sequence specifying the domain name to be resolved.
@@ -155,11 +151,9 @@ namespace DNS
          ~Question() = default;
       };
 
-      class Record
-      {
+      class Record {
       public:
-         enum Type
-         {
+         enum Type {
             A     = 1,  /* a host address */
             NS    = 2,  /* an authoritative name server */
             MD    = 3,  /* a mail destination (Obsolete - use MX) */
@@ -181,53 +175,46 @@ namespace DNS
             CAA   = 257 /* Certification Authority Authorization */
          };
 
-         struct Unknown
-         {
+         struct Unknown {
             std::string domain;
             uint16_t    qtype;
             uint16_t    data_len;
             uint32_t    ttl;
          };
 
-         struct A
-         {
+         struct A {
             std::string domain;
             uint32_t    addr;   // IPv4 address structure
             uint32_t    ttl;
          };
 
-         struct NS
-         {
+         struct NS {
             std::string domain;
             std::string host;
             uint32_t    ttl;
          };
 
-         struct CNAME
-         {
+         struct CNAME {
             std::string domain;
             std::string host;
             uint32_t    ttl;
          };
 
-         struct MX
-         {
+         struct MX {
             std::string domain;
             uint16_t    priority;
             std::string host;
             uint32_t    ttl;
          };
 
-         struct AAAA
-         {
+         struct AAAA {
             std::string domain;
             in6_addr    addr;   // IPv6 address structure
             uint32_t    ttl;
          };
 
          // Union to hold different record types
-         union Data
-         {
+         union Data {
             Unknown unknown;
             A       a;
             NS      ns;
@@ -251,10 +238,8 @@ namespace DNS
          Record(const AAAA &record) : type(Type::AAAA) { new (&data.aaaa) AAAA(record); }
 
          // Destructor to manually call the destructor of the active member
-         ~Record()
-         {
-            switch (type)
-            {
+         ~Record() {
+            switch (type) {
             case A: data.a.~A(); break;
             case NS: data.ns.~NS(); break;
             case CNAME: data.cname.~CNAME(); break;

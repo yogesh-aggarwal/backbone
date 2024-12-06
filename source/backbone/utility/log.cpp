@@ -9,12 +9,12 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 int
-GetShellColumns()
-{
+GetShellColumns() {
    struct winsize ws;
    int            fd;
    fd = open("/dev/tty", O_RDWR);
-   if (fd < 0 || ioctl(fd, TIOCGWINSZ, &ws) < 0) err(8, "/dev/tty");
+   if (fd < 0 || ioctl(fd, TIOCGWINSZ, &ws) < 0)
+      err(8, "/dev/tty");
    const int shellColumns = ws.ws_col;
    close(fd);
 
@@ -24,8 +24,7 @@ GetShellColumns()
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-PrintSeparator(char separator)
-{
+PrintSeparator(char separator) {
    const int shellColumns = GetShellColumns();
    printf("%s", std::string(shellColumns, separator).c_str());
 }
@@ -37,8 +36,7 @@ PrintAtCenter(std::string message,
               std::string startDecorator,
               std::string endDecorator,
               bool        separatorAtStart,
-              bool        separatorAtEnd)
-{
+              bool        separatorAtEnd) {
    const int shellColumns = GetShellColumns();
 
    int totalWhitespaces = shellColumns              //
@@ -48,7 +46,8 @@ PrintAtCenter(std::string message,
    int leftWhitespaces  = totalWhitespaces / 2;
    int rightWhitespaces = totalWhitespaces - leftWhitespaces;
 
-   if (separatorAtStart) printf("%s", std::string(shellColumns, '-').c_str());
+   if (separatorAtStart)
+      printf("%s", std::string(shellColumns, '-').c_str());
 
    printf("\n%s", startDecorator.c_str());
    printf("%s", std::string(leftWhitespaces, ' ').c_str());
@@ -56,7 +55,8 @@ PrintAtCenter(std::string message,
    printf("%s", std::string(rightWhitespaces, ' ').c_str());
    printf("%s\n", endDecorator.c_str());
 
-   if (separatorAtEnd) printf("%s", std::string(shellColumns, '-').c_str());
+   if (separatorAtEnd)
+      printf("%s", std::string(shellColumns, '-').c_str());
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
