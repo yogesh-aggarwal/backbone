@@ -8,3 +8,10 @@ PacketRecord::from_buffer(Ref<PacketBuffer> buffer) {
 }
 
 /* ------------------------------------------------------------------------------------------------------- */
+
+Result<void>
+PacketRecord::write_to_buffer(Ref<PacketBuffer> buffer) const {
+   return Result<void>();
+}
+
+/* ------------------------------------------------------------------------------------------------------- */
