@@ -45,7 +45,7 @@ public:
          return Error({ OUT_OF_BOUNDS, "Range out of bounds" });
       }
 
-      std::vector<T> range(buffer.begin() + start, buffer.begin() + end + 1);
+      std::vector<T> range(buffer.begin() + start, buffer.begin() + end);
 
       return range;
    }
