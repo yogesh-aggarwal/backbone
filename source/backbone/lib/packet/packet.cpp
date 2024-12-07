@@ -17,7 +17,7 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
    /* Parse header */
    auto header = PacketHeader::from_buffer(buffer)
                      //
-                     .with_catch({ FAILED_TO_PARSE_HEADER, "Failed to parse packet header" });
+                     .with_catch(FAILED_TO_PARSE_HEADER, "Failed to parse packet header");
    RETURN_IF_ERROR(header);
 
    /* Parse questions */
@@ -26,7 +26,7 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
       // Parse question
       auto question = PacketQuestion::from_buffer(buffer)
                           //
-                          .with_catch({ FAILED_TO_PARSE_QUESTION, "Failed to parse packet question" });
+                          .with_catch(FAILED_TO_PARSE_QUESTION, "Failed to parse packet question");
       RETURN_IF_ERROR(question);
 
       // Add question to the list
@@ -39,7 +39,7 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
       // Parse answer
       auto answer = PacketRecord::from_buffer(buffer)
                         //
-                        .with_catch({ FAILED_TO_PARSE_RECORD, "Failed to parse packet answer" });
+                        .with_catch(FAILED_TO_PARSE_RECORD, "Failed to parse packet answer");
       RETURN_IF_ERROR(answer);
 
       // Add answer to the list
@@ -52,7 +52,7 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
       // Parse authority
       auto authority = PacketRecord::from_buffer(buffer)
                            //
-                           .with_catch({ FAILED_TO_PARSE_RECORD, "Failed to parse packet authority" });
+                           .with_catch(FAILED_TO_PARSE_RECORD, "Failed to parse packet authority");
       RETURN_IF_ERROR(authority);
 
       // Add authority to the list
@@ -65,7 +65,7 @@ Packet::from_buffer(Ref<PacketBuffer> buffer) {
       // Parse additional
       auto additional = PacketRecord::from_buffer(buffer)
                             //
-                            .with_catch({ FAILED_TO_PARSE_RECORD, "Failed to parse packet additional" });
+                            .with_catch(FAILED_TO_PARSE_RECORD, "Failed to parse packet additional");
       RETURN_IF_ERROR(additional);
 
       // Add additional to the list
@@ -86,7 +86,7 @@ Packet::write_to_buffer(Ref<PacketBuffer> buffer) const {
    res = this->header
              .write_to_buffer(buffer)
              //
-             .with_catch({ FAILED_TO_WRITE_HEADER, "Failed to write packet header" });
+             .with_catch(FAILED_TO_WRITE_HEADER, "Failed to write packet header");
    RETURN_IF_ERROR(res);
 
    /* Write questions */
@@ -94,7 +94,7 @@ Packet::write_to_buffer(Ref<PacketBuffer> buffer) const {
       res = question
                 .write_to_buffer(buffer)
                 //
-                .with_catch({ FAILED_TO_WRITE_QUESTION, "Failed to write packet question" });
+                .with_catch(FAILED_TO_WRITE_QUESTION, "Failed to write packet question");
       RETURN_IF_ERROR(res);
    }
 
@@ -103,7 +103,7 @@ Packet::write_to_buffer(Ref<PacketBuffer> buffer) const {
       res = answer
                 .write_to_buffer(buffer)
                 //
-                .with_catch({ FAILED_TO_WRITE_RECORD, "Failed to write packet answer" });
+                .with_catch(FAILED_TO_WRITE_RECORD, "Failed to write packet answer");
       RETURN_IF_ERROR(res);
    }
 
@@ -112,7 +112,7 @@ Packet::write_to_buffer(Ref<PacketBuffer> buffer) const {
       res = authority
                 .write_to_buffer(buffer)
                 //
-                .with_catch({ FAILED_TO_WRITE_RECORD, "Failed to write packet authority" });
+                .with_catch(FAILED_TO_WRITE_RECORD, "Failed to write packet authority");
       RETURN_IF_ERROR(res);
    }
 
@@ -121,7 +121,7 @@ Packet::write_to_buffer(Ref<PacketBuffer> buffer) const {
       res = additional
                 .write_to_buffer(buffer)
                 //
-                .with_catch({ FAILED_TO_WRITE_RECORD, "Failed to write packet additional" });
+                .with_catch(FAILED_TO_WRITE_RECORD, "Failed to write packet additional");
       RETURN_IF_ERROR(res);
    }
 

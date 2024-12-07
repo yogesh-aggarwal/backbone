@@ -12,21 +12,21 @@ PacketQuestion::from_buffer(Ref<PacketBuffer> buf) {
    /* Domain Name */
    auto _name = read_domain_name(buf)
                     //
-                    .with_catch({ OUT_OF_BOUNDS, "Invalid domain name" });
+                    .with_catch(OUT_OF_BOUNDS, "Invalid domain name");
    RETURN_IF_ERROR(_name);
    auto name = _name.get_value();
 
    /* Type */
    auto _type = buf->read_uint16()
                     //
-                    .with_catch({ OUT_OF_BOUNDS, "Invalid query type" });
+                    .with_catch(OUT_OF_BOUNDS, "Invalid query type");
    RETURN_IF_ERROR(_type);
    auto type = static_cast<QueryType>(_type.get_value());
 
    /* Class */
    auto _class = buf->read_uint16()
                      //
-                     .with_catch({ OUT_OF_BOUNDS, "Invalid query class" });
+                     .with_catch(OUT_OF_BOUNDS, "Invalid query class");
    RETURN_IF_ERROR(_class);
    auto class_ = _class.get_value();
 
@@ -48,7 +48,7 @@ PacketQuestion::read_domain_name(Ref<PacketBuffer> buffer) {
    auto domain_name = buffer
                           ->read_qname()
                           //
-                          .with_catch({ FAILED_TO_READ_QNAME, "Failed to read domain name" });
+                          .with_catch(FAILED_TO_READ_QNAME, "Failed to read domain name");
    return domain_name;
 }
 

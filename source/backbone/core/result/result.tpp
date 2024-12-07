@@ -5,9 +5,10 @@
 #include <utility>
 #include <tuple>
 #include <optional>
+#include <source_location>
 
-#include <backbone/core/error.hpp>
-#include <backbone/core/helpers.hpp>
+#include <backbone/core/error/error.hpp>
+#include <backbone/core/common/helpers.hpp>
 
 // General template for Result
 template<typename T>
@@ -65,9 +66,19 @@ public:
    }
 
    inline Result<T> &
-   with_catch(const ErrorUnit &eu) {
+   with_catch(const std::string &message, std::source_location location = std::source_location::current()) {
       if (is_error()) {
-         error->push(eu);
+         error->push({ UNKNOWN, message, location });
+      }
+      return *this;
+   }
+
+   inline Result<T> &
+   with_catch(ErrorCode            ec,
+              const std::string   &message,
+              std::source_location location = std::source_location::current()) {
+      if (is_error()) {
+         error->push({ ec, message, location });
       }
       return *this;
    }
@@ -145,11 +156,19 @@ public:
    }
 
    inline Result<void> &
-   with_catch(const ErrorUnit &eu) {
+   with_catch(const std::string &message, std::source_location location = std::source_location::current()) {
       if (is_error()) {
-         error->push(eu);
-      } else {
-         error = Error(eu);
+         error->push({ UNKNOWN, message, location });
+      }
+      return *this;
+   }
+
+   inline Result<void> &
+   with_catch(ErrorCode            ec,
+              const std::string   &message,
+              std::source_location location = std::source_location::current()) {
+      if (is_error()) {
+         error->push({ ec, message, location });
       }
       return *this;
    }

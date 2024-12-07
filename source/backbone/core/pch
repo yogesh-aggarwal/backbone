@@ -1,11 +1,28 @@
 #pragma once
 
+/* ------------------------------------------------------------------------------------------------------- */
+
+// STL
 #include <iostream>
 #include <limits>
 
-#include "defines.hpp"
-#include "error.hpp"
-#include "helpers.hpp"
-#include "result.tpp"
+/* ------------------------------------------------------------------------------------------------------- */
 
+// Common
+#include <backbone/core/common/defines.hpp>
+#include <backbone/core/common/helpers.hpp>
+
+// Error
+#include <backbone/core/error/codes.hpp>
+#include <backbone/core/error/error.hpp>
+#include <backbone/core/error/unit.hpp>
+
+// Result
+#include <backbone/core/result/result.tpp>
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+// Utility
 #include <backbone/utility/log.hpp>
+
+/* ------------------------------------------------------------------------------------------------------- */

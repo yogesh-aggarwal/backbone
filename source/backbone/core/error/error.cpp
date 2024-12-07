@@ -4,47 +4,7 @@
 #include <iostream>
 #include <string>
 
-#include <backbone/core/helpers.hpp>
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-ErrorUnit::ErrorUnit(ErrorCode code, std::source_location location)
-    : m_Code(code), m_Message(""), m_Location(location) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-ErrorUnit::ErrorUnit(std::string message, std::source_location location)
-    : m_Code(UNDEFINED), m_Message(std::move(message)), m_Location(location) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-ErrorUnit::ErrorUnit(ErrorCode code, std::string message, std::source_location location)
-    : m_Code(code), m_Message(std::move(message)), m_Location(location) {}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-ErrorCode
-ErrorUnit::GetCode() const {
-   return m_Code;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-std::string
-ErrorUnit::GetMessage() const {
-   return m_Message;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-const std::source_location &
-ErrorUnit::GetLocation() const {
-   return m_Location;
-}
-
-/* ------------------------------------------------------------------------------------------------------- */
-
-ErrorUnit::operator std::string() const { return m_Message; }
+#include <backbone/core/common/helpers.hpp>
 
 /* ------------------------------------------------------------------------------------------------------- */
 
@@ -57,6 +17,22 @@ Error::Error(const ErrorUnit &unit) { m_Errors.push_back(unit); }
 /* ------------------------------------------------------------------------------------------------------- */
 
 Error::Error(const std::vector<ErrorUnit> &errors) : m_Errors(errors) {}
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+Error::Error(std::string message, std::source_location location) {
+   m_Errors.push_back(ErrorUnit(message.c_str(), location));
+}
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+Error::Error(ErrorCode code, std::source_location location) { m_Errors.push_back(ErrorUnit(code, location)); }
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+Error::Error(ErrorCode code, std::string message, std::source_location location) {
+   m_Errors.push_back(ErrorUnit(code, message.c_str(), location));
+}
 
 /* ------------------------------------------------------------------------------------------------------- */
 
