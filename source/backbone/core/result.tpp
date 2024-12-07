@@ -4,6 +4,7 @@
 #include <functional>
 #include <utility>
 #include <tuple>
+#include <optional>
 
 #include <backbone/core/error.hpp>
 #include <backbone/core/helpers.hpp>
@@ -79,6 +80,14 @@ public:
       return *this;
    }
 
+   inline Result<T> &
+   panic_if_error(const std::string &title = "") {
+      if (is_error()) {
+         get_error().panic(title);
+      }
+      return *this;
+   }
+
    inline std::tuple<std::optional<T>, Ref<Error>>
    as_tuple() const {
       return { value, error };
@@ -141,6 +150,14 @@ public:
          error->push(eu);
       } else {
          error = Error(eu);
+      }
+      return *this;
+   }
+
+   inline Result<void> &
+   panic_if_error(const std::string &title = "") {
+      if (is_error()) {
+         get_error().panic(title);
       }
       return *this;
    }
