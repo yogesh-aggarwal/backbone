@@ -120,7 +120,7 @@ Error::print(const std::string &title) const {
 void
 Error::panic(const std::string &title) const {
    print(title);
-   throw *this;
+   exit(EXIT_FAILURE);
 }
 
 /* ------------------------------------------------------------------------------------------------------- */

@@ -14,12 +14,14 @@ enum ErrorCode {
    FAILED_TO_READ_LABEL,
 
    /* Packet Error Codes */
-   FAILED_TO_PARSE_HEADER = 0x2,
-   FAILED_TO_WRITE_HEADER,
-   FAILED_TO_PARSE_QUESTION,
-   FAILED_TO_WRITE_QUESTION,
-   FAILED_TO_PARSE_RECORD,
-   FAILED_TO_WRITE_RECORD,
+   PACKET_BUFFER_UNKNOWN = 0x2,
+
+   PACKET_READ_CORRUPTED_BUFFER,
+   PACKET_WRITE_CORRUPTED_BUFFER,
+
+   PACKET_READ_CORRUPTED_HEADER,
+   PACKET_READ_CORRUPTED_QUESTION,
+   PACKET_READ_CORRUPTED_RECORD,
 };
 
 /* ------------------------------------------------------------------------------------------------------- */
