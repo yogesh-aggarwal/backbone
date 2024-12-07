@@ -142,7 +142,8 @@ Error::print(const std::string &title) const {
 /* ------------------------------------------------------------------------------------------------------- */
 
 void
-Error::panic() const {
+Error::panic(const std::string &title) const {
+   print(title);
    throw *this;
 }
 

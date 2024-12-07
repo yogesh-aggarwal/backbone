@@ -76,5 +76,5 @@ public:
    print(const std::string &title = "") const;
 
    void
-   panic() const;
+   panic(const std::string &title = "") const;
 };
