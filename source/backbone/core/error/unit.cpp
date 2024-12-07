@@ -8,7 +8,7 @@ ErrorUnit::ErrorUnit(ErrorCode code, std::source_location location)
 /* ------------------------------------------------------------------------------------------------------- */
 
 ErrorUnit::ErrorUnit(std::string message, std::source_location location)
-    : m_Code(UNKNOWN), m_Message(message), m_Location(location) {}
+    : m_Code(UNDEFINED), m_Message(message), m_Location(location) {}
 
 /* ------------------------------------------------------------------------------------------------------- */
 

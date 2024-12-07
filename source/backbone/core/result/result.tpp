@@ -68,7 +68,7 @@ public:
    inline Result<T> &
    with_catch(const std::string &message, std::source_location location = std::source_location::current()) {
       if (is_error()) {
-         error->push({ UNKNOWN, message, location });
+         error->push({ UNDEFINED, message, location });
       }
       return *this;
    }
