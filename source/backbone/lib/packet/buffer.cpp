@@ -46,9 +46,7 @@ PacketBuffer::read_qname() {
 
          result += delim;
 
-         auto str_buffer = get_range(pos, pos + len)
-                               //
-                               .with_catch(FAILED_TO_READ_LABEL, "Failed to read label from buffer.");
+         auto str_buffer = get_range(pos, pos + len).with_catch("Failed to read label from buffer.");
          RETURN_IF_ERROR(str_buffer);
 
          result += std::string(str_buffer.get_value().begin(), str_buffer.get_value().end());

@@ -105,7 +105,6 @@ Error::print(const std::string &title) const {
              error.GetLocation().line(),
              error.GetLocation().column(),
              std::string(indent, ' ').c_str(),
-             //  "error str"
              error.GetMessage().c_str());
    }
 
