@@ -18,7 +18,7 @@ PacketBuffer::read_qname() {
    std::string result;
    while (true) {
       if (jumps_performed > max_jumps) {
-         return Error(FAILED_TO_READ_QNAME, "Limit of 5 jumps in a DNS name exceeded.");
+         return Error("Limit of 5 jumps in a DNS name exceeded.");
       }
 
       uint8_t len = get_at(pos).with_fallback(0).get_value();
