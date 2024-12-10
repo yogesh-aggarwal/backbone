@@ -49,14 +49,12 @@ PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
        PacketHeader(0, false, 0, false, false, false, false, 0, ResultCode::NO_ERROR, 0, 0, 0, 0);
 
    // 16 bits
-   auto _id = buf->read_uint16().with_catch("Failed to read the ID field from buffer");
+   auto _id = buf->read_uint16().except("Failed to read the ID field from buffer");
    RETURN_IF_ERROR(_id)
    header.id = _id.get_value();
 
    // 16 bits
-   auto _flags = buf->read_uint16()
-                     //
-                     .with_catch("Failed to read the _flags field from buffer");
+   auto _flags = buf->read_uint16().except("Failed to read the _flags field from buffer");
    RETURN_IF_ERROR(_flags);
    uint16_t flags = _flags.get_value();
 
@@ -70,22 +68,22 @@ PacketHeader::from_buffer(Ref<PacketBuffer> buf) {
    header.response_code        = static_cast<ResultCode>((flags & 0b0000000000001111));   // 4 bits
 
    // 16 bits
-   auto _question_count = buf->read_uint16().with_catch("Failed to read the question count");
+   auto _question_count = buf->read_uint16().except("Failed to read the question count");
    RETURN_IF_ERROR(_question_count);
    header.question_count = _question_count.get_value();
 
    // 16 bits
-   auto _answer_count = buf->read_uint16().with_catch("Failed to read the answer count");
+   auto _answer_count = buf->read_uint16().except("Failed to read the answer count");
    RETURN_IF_ERROR(_answer_count);
    header.answer_count = _answer_count.get_value();
 
    // 16 bits
-   auto _authority_count = buf->read_uint16().with_catch("Failed to read the authority count");
+   auto _authority_count = buf->read_uint16().except("Failed to read the authority count");
    RETURN_IF_ERROR(_authority_count);
    header.authority_count = _authority_count.get_value();
 
    // 16 bits
-   auto _additional_count = buf->read_uint16().with_catch("Failed to read the additional count");
+   auto _additional_count = buf->read_uint16().except("Failed to read the additional count");
    RETURN_IF_ERROR(_additional_count);
    header.additional_count = _additional_count.get_value();
 
@@ -99,34 +97,34 @@ PacketHeader::write_to_buffer(Ref<PacketBuffer> buf) const {
    auto res = Ok();
 
    // Seek to the beginning of the buffer
-   res = buf->seek_write(0).with_catch("Failed to write the header to buffer");
+   res = buf->seek_write(0).except("Failed to write the header to buffer");
    RETURN_IF_ERROR(res)
 
    /* ID */
-   res = buf->write_uint16(id).with_catch("Failed to write the ID field to buffer");
+   res = buf->write_uint16(id).except("Failed to write the ID field to buffer");
    RETURN_IF_ERROR(res)
 
    /* Flags */
    uint16_t flags = (query_response << 15) | (op_code << 11) | (authoritative_answer << 10) |
                     (truncated_message << 9) | (recursion_desired << 8) | (recursion_available << 7) |
                     (reserved << 4) | response_code;
-   res = buf->write_uint16(flags).with_catch("Failed to write the flags field to buffer");
+   res = buf->write_uint16(flags).except("Failed to write the flags field to buffer");
    RETURN_IF_ERROR(res)
 
    /* Question count */
-   res = buf->write_uint16(question_count).with_catch("Failed to write the question count");
+   res = buf->write_uint16(question_count).except("Failed to write the question count");
    RETURN_IF_ERROR(res)
 
    /* Answer count */
-   res = buf->write_uint16(answer_count).with_catch("Failed to write the answer count");
+   res = buf->write_uint16(answer_count).except("Failed to write the answer count");
    RETURN_IF_ERROR(res)
 
    /* Authority count */
-   res = buf->write_uint16(authority_count).with_catch("Failed to write the authority count");
+   res = buf->write_uint16(authority_count).except("Failed to write the authority count");
    RETURN_IF_ERROR(res)
 
    /* Additional count */
-   res = buf->write_uint16(additional_count).with_catch("Failed to write the additional count");
+   res = buf->write_uint16(additional_count).except("Failed to write the additional count");
    RETURN_IF_ERROR(res)
 
    return Ok();

@@ -58,7 +58,7 @@ public:
    }
 
    inline const Result<T> &
-   with_catch_fn(const std::function<void(Error)> &handler) const {
+   except_fn(const std::function<void(Error)> &handler) const {
       if (is_error()) {
          handler(error.value());
       }
@@ -66,7 +66,7 @@ public:
    }
 
    inline Result<T> &
-   with_catch(const std::string &message, std::source_location location = std::source_location::current()) {
+   except(const std::string &message, std::source_location location = std::source_location::current()) {
       if (is_error()) {
          error->push({ UNDEFINED, message, location });
       }
@@ -74,9 +74,9 @@ public:
    }
 
    inline Result<T> &
-   with_catch(ErrorCode            ec,
-              const std::string   &message,
-              std::source_location location = std::source_location::current()) {
+   except(ErrorCode            ec,
+          const std::string   &message,
+          std::source_location location = std::source_location::current()) {
       if (is_error()) {
          error->push({ ec, message, location });
       }
@@ -148,7 +148,7 @@ public:
    }
 
    inline const Result<void> &
-   with_catch_fn(const std::function<void(Error)> &handler) const {
+   except_fn(const std::function<void(Error)> &handler) const {
       if (is_error()) {
          handler(error.value());
       }
@@ -156,7 +156,7 @@ public:
    }
 
    inline Result<void> &
-   with_catch(const std::string &message, std::source_location location = std::source_location::current()) {
+   except(const std::string &message, std::source_location location = std::source_location::current()) {
       if (is_error()) {
          error->push({ UNKNOWN, message, location });
       }
@@ -164,9 +164,9 @@ public:
    }
 
    inline Result<void> &
-   with_catch(ErrorCode            ec,
-              const std::string   &message,
-              std::source_location location = std::source_location::current()) {
+   except(ErrorCode            ec,
+          const std::string   &message,
+          std::source_location location = std::source_location::current()) {
       if (is_error()) {
          error->push({ ec, message, location });
       }
