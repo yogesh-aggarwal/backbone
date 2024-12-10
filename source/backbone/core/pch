@@ -9,20 +9,18 @@
 /* ------------------------------------------------------------------------------------------------------- */
 
 // Common
-#include <backbone/core/common/defines.hpp>
-#include <backbone/core/common/helpers.hpp>
+#include "common/defines.hpp"
+#include "common/helpers.hpp"
 
 // Error
-#include <backbone/core/error/codes.hpp>
-#include <backbone/core/error/error.hpp>
-#include <backbone/core/error/unit.hpp>
+#include "error/codes.hpp"
+#include "error/error.hpp"
+#include "error/unit.hpp"
 
 // Result
-#include <backbone/core/result/result.tpp>
-
-/* ------------------------------------------------------------------------------------------------------- */
+#include "result/result.tpp"
 
 // Utility
-#include <backbone/utility/log.hpp>
+#include "utility/log.hpp"
 
 /* ------------------------------------------------------------------------------------------------------- */
