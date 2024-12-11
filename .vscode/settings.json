@@ -1,7 +1,7 @@
 {
 	"explorer.fileNesting.patterns": {
-		"CMakeLists.txt": "README.md, Makefile, .gitignore, .gitmodules, .clang-format, Doxyfile",
-		"*.hpp": "$(capture).cpp, $(capture).inl, $(capture).tcc, $(capture).c"
+		"CMakeLists.txt": "*.md, Makefile, .gitignore, .gitmodules, .clang-format, Doxyfile, LICENSE, AUTHORS",
+		"*.hpp": "$(capture).cpp, $(capture)_*.cpp, $(capture).inl, $(capture)_*.inl, $(capture).tcc, $(capture)_*.tcc, $(capture).c, $(capture)_*.c"
 	},
 	"files.associations": {
 		"*.svg": "html",
