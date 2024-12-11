@@ -116,7 +116,12 @@ Build the project using the provided Makefile or CMake.
 
 3. In `cmd/test`, create a C++ file (e.g., `main.cpp`) and begin using headers from the Backbone project:
    ```cpp
-   #include <backbone/your_desired_header_file.hpp>
+   #include <backbone/backbone.hpp>
+
+   int
+   main() {
+      hello_backbone();
+   }
    ```
 
 **Note**: This test directory and its contents will not be committed to Git.
