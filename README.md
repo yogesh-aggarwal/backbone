@@ -107,13 +107,11 @@ Build the project using the provided Makefile or CMake.
 
 2. Inside `cmd/test`, create a `CMakeLists.txt` file with the following content:
    ```cmake
-   # Automatically add all subdirectories at this level
-   file(GLOB subdirs RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*)
-   foreach(subdir ${subdirs})
-      if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${subdir})
-         add_subdirectory(${subdir})
-      endif()
-   endforeach()
+   # Add executable for `test`
+   add_executable(test main.cpp)
+
+   # Link the backbone library (from the `source` folder)
+   target_link_libraries(test PRIVATE backbone)
    ```
 
 3. In `cmd/test`, create a C++ file (e.g., `main.cpp`) and begin using headers from the Backbone project:
