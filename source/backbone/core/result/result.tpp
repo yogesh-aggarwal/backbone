@@ -7,8 +7,8 @@
 #include <optional>
 #include <source_location>
 
-#include <backbone/core/error/error.hpp>
-#include <backbone/core/common/helpers.hpp>
+#include "../error/error.hpp"
+#include "../common/helpers.hpp"
 
 // General template for Result
 template<typename T>
@@ -36,12 +36,12 @@ public:
       return !error.has_value();
    }
 
-   inline const T &
-   get_value() const {
+   inline T &
+   get_value() {
       if (!value.has_value()) {
          throw std::runtime_error("Attempted to access value from an error Result");
       }
-      return *value;
+      return value.value();
    }
 
    inline const Error &
@@ -192,3 +192,5 @@ inline Result<void>
 Ok() {
    return Result<void>::ok();
 }
+
+using VoidResult = Result<void>;
