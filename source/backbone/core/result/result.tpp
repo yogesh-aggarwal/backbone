@@ -113,7 +113,7 @@ public:
 // Specialization for void
 template<>
 class [[nodiscard]] Result<void> {
-public:
+private:
    std::optional<Error> error;
 
 public:
